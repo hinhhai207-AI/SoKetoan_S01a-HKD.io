@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống Thuế & Sổ Sách Hộ Kinh Doanh 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Courier Prime -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <!-- SheetJS Library for genuine Excel (.xlsx) export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-courier {
+            font-family: 'Courier Prime', monospace;
+        }
+        /* Thanh cuộn tùy chỉnh cao cấp */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #print-area, #print-area * {
+                visibility: visible;
+            }
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased transition-colors duration-300">
+
+    <!-- Danh sách SVG Icons hệ thống -->
+    <svg class="hidden">
+        <symbol id="icon-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="9" y1="9" x2="15" y2="9"></line>
+            <line x1="9" y1="13" x2="15" y2="13"></line>
+            <line x1="9" y1="17" x2="15" y2="17"></line>
+            <line x1="12" y1="9" x2="12" y2="17"></line>
+        </symbol>
+        <symbol id="icon-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5V4.5z"></path>
+        </symbol>
+        <symbol id="icon-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </symbol>
+        <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+        </symbol>
+        <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </symbol>
+        <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+        </symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </symbol>
+        <symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </symbol>
+        <symbol id="icon-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+        </symbol>
+        <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" h2="13"></line>
+            <line x1="16" y1="17" x2="8" h2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+        </symbol>
+        <symbol id="icon-sync" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+        </symbol>
+    </svg>
+
+    <!-- Header chính với thanh điều hướng tối ưu hóa vị trí -->
+    <header class="bg-gradient-to-r from-orange-600 to-red-700 text-white shadow-lg sticky top-0 z-50 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center justify-between py-4 lg:h-20 gap-4">
+                <!-- Logo & Tiêu đề -->
+                <div class="flex items-center space-x-3 w-full lg:w-auto">
+                    <div class="bg-white/20 p-2.5 rounded-xl border border-white/30">
+                        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2-1.1 0-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-lg sm:text-xl tracking-tight text-white">Kê Khai Thuế - Nhóm 1: Sổ doanh thu Mẫu S1a-HKD <span class="text-yellow-300 font-extrabold">2026</span></h1>
+                        <p class="text-xs text-orange-100">Ghi sổ & Tự động hóa Sổ sách Hộ kinh doanh</p>
+                    </div>
+                </div>
+
+                <!-- Các Tab Điều Hướng (Vị trí sắp xếp theo yêu cầu người dùng) -->
+                <nav class="flex flex-wrap justify-center gap-2 w-full lg:w-auto">
+                    <!-- Tab 1: Sổ Sách (Blue Style) -->
+                    <button onclick="switchTab('book')" id="btn-tab-book" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 border border-transparent bg-white/10 hover:bg-white/20 text-white">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-4 h-4"><use href="#icon-book"></use></svg>
+                            <span>Sổ Doanh Thu (S1a)</span>
+                        </span>
+                    </button>
+                    <!-- Tab 2: Báo cáo tháng (Indigo Style) - DI CHUYỂN LÊN VỊ TRÍ THỨ 2 -->
+                    <button onclick="switchTab('monthly')" id="btn-tab-monthly" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 border border-transparent bg-white/10 hover:bg-white/20 text-white">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            <span>Báo cáo tháng</span>
+                        </span>
+                    </button>
+                    <!-- Tab 3: Tính Thuế 2026 (Emerald Style) -->
+                    <button onclick="switchTab('calc')" id="btn-tab-calc" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm border border-transparent bg-white/10 hover:bg-white/20 text-white">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-4 h-4"><use href="#icon-calc"></use></svg>
+                            <span>Tính Thuế 2026</span>
+                        </span>
+                    </button>
+                    <!-- Tab 4: Hỗ trợ Thuế (Amber Style) -->
+                    <button onclick="switchTab('guide')" id="btn-tab-guide" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 border border-transparent bg-white/10 hover:bg-white/20 text-white">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-4 h-4"><use href="#icon-guide"></use></svg>
+                            <span>Hỗ trợ Thuế</span>
+                        </span>
+                    </button>
+                    <!-- Tab 5: Thông báo Mẫu-HKD (Purple Style) -->
+                    <button onclick="switchTab('noti')" id="btn-tab-noti" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 border border-transparent bg-white/10 hover:bg-white/20 text-white">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-4 h-4"><use href="#icon-file-text"></use></svg>
+                            <span>Thông báo Mẫu-HKD</span>
+                        </span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Thanh thông báo trạng thái -->
+    <div id="notice-bar" class="bg-slate-50 border-b border-slate-200 py-3 px-4 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-xs sm:text-sm text-slate-800">
+            <div class="flex items-center space-x-2">
+                <span id="notice-badge" class="bg-slate-500 text-white font-bold text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">CẬP NHẬT 2026</span>
+                <span id="notice-text">Hệ thống đang tải dữ liệu kiểm thử...</span>
+            </div>
+            <div class="text-slate-600 font-semibold" id="notice-subtext"> • Đang tải...</div>
+        </div>
+    </div>
+
+    <!-- KHU VỰC HIỂN THỊ NỘI DUNG CHÍNH -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ==================== TAB 1: SỔ SÁCH MẪU S1A-HKD ==================== -->
+        <section id="tab-content-book" class="tab-pane hidden space-y-6">
+            <!-- Thống kê nhanh & Các nút tác vụ nhanh -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Thẻ 1: Tổng doanh thu lũy kế từ sổ -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Tổng Doanh Thu Ghi Sổ</p>
+                        <h4 class="text-2xl font-black text-slate-800 mt-1" id="book-stat-revenue">0 đ</h4>
+                        <span class="text-[11px] text-slate-500 mt-1 block">Cập nhật thời gian thực từ chứng từ sổ</span>
+                    </div>
+                    <div class="bg-blue-50 text-blue-600 p-3 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Thẻ 2: Hạn mức so với ngưỡng thuế -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Hạn mức miễn thuế</p>
+                        <h4 class="text-lg font-bold text-emerald-600 mt-1 flex items-center gap-1.5" id="book-stat-status">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span> An toàn (&lt; 1 Tỷ)
+                        </h4>
+                        <span class="text-[11px] text-slate-400 mt-1 block" id="book-stat-ratio">Còn lại 1.000.000.000đ trước khi chịu thuế</span>
+                    </div>
+                    <div class="bg-slate-50 text-slate-500 p-3 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Thẻ 3: Tác vụ nhanh -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center space-y-2">
+                    <div class="grid grid-cols-3 gap-1.5">
+                        <button onclick="downloadS1aData()" class="flex flex-col items-center justify-center p-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-lg text-[10px] font-semibold transition" title="Sao lưu dữ liệu JSON">
+                            <svg class="w-4 h-4 text-slate-500 mb-1"><use href="#icon-download"></use></svg>
+                            <span>Tải JSON</span>
+                        </button>
+                        <!-- Điều phối chuyển nhanh về Tab Báo cáo Tháng -->
+                        <button onclick="switchTab('monthly')" class="flex flex-col items-center justify-center p-2 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 rounded-lg text-[10px] font-semibold transition animate-pulse" title="Xem phân bổ hằng tháng">
+                            <svg class="w-4 h-4 text-indigo-600 mb-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            <span>Báo cáo tháng</span>
+                        </button>
+                        <button onclick="loadSampleEntries()" class="flex flex-col items-center justify-center p-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 rounded-lg text-[10px] font-semibold transition" title="Tải dữ liệu thử nghiệm">
+                            <svg class="w-4 h-4 text-blue-600 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 15H19"/>
+                            </svg>
+                            <span>Dữ liệu mẫu</span>
+                        </button>
+                    </div>
+                    <button onclick="requestClearAll()" class="w-full text-center text-xs text-rose-600 hover:text-rose-800 hover:underline pt-1 font-semibold">
+                        Xóa sạch toàn bộ sổ hiện tại
+                    </button>
+                </div>
+            </div>
+
+            <!-- Giao diện Ghi Sổ Ledger chính -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Form: Thêm/Sửa Nghiệp vụ Doanh thu -->
+                <div class="lg:col-span-1 bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2 flex items-center justify-between">
+                        <span id="form-ledger-title">Ghi nhận Nghiệp vụ</span>
+                        <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold uppercase">Thông tư 152/2025</span>
+                    </h4>
+
+                    <form id="form-add-entry" onsubmit="addEntry(event)" class="space-y-3">
+                        <input type="hidden" id="entry-edit-index" value="-1">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Ngày chứng từ / Phát sinh</label>
+                            <input type="date" id="entry-date" required class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:ring-blue-500 font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Số chứng từ / Số Hóa đơn</label>
+                            <input type="text" id="entry-doc" required placeholder="Ví dụ: HD-0021 hoặc BL-001" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:ring-blue-500 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Nội dung diễn giải</label>
+                            <input type="text" id="entry-desc" required placeholder="Ví dụ: Bán sỉ quần áo trẻ em" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Số tiền Doanh thu (VNĐ)</label>
+                            <div class="relative rounded-lg shadow-sm">
+                                <input type="text" id="entry-amount" required oninput="formatEntryAmountInput(this)" placeholder="0" class="block w-full rounded-lg border border-slate-300 pl-3 pr-8 py-2 text-sm font-bold text-slate-900 focus:border-blue-500 focus:ring-blue-500">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <span class="text-slate-400 text-xs font-bold">đ</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Các nút điều khiển Form -->
+                        <div class="space-y-2 pt-1">
+                            <button type="submit" id="btn-ledger-submit" class="w-full flex items-center justify-center space-x-2 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition-colors shadow-sm">
+                                <svg class="w-4 h-4"><use href="#icon-plus"></use></svg>
+                                <span id="btn-ledger-submit-text">Ghi vào Sổ S1a-HKD</span>
+                            </button>
+                            <button type="button" id="btn-ledger-cancel-edit" onclick="cancelEditMode()" class="hidden w-full text-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs transition-colors">
+                                Hủy sửa đổi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Bảng: Sổ Doanh Thu S1a-HKD điện tử -->
+                <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="bg-slate-50 p-4 border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Sổ Chi Tiết Doanh Thu Bán Hàng Hóa, Dịch Vụ</h4>
+                            <p class="text-[11px] text-slate-500">Mẫu số S1a-HKD (Ban hành kèm theo Thông tư số 152/2025)</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div id="filter-badge" class="hidden text-[10px] bg-amber-100 text-amber-800 border border-amber-200 px-2 py-1 rounded font-bold flex items-center gap-1.5 animate-pulse">
+                                <span id="filter-badge-text">Đang lọc: Tháng 01/2026</span>
+                                <button onclick="clearMonthFilter()" class="hover:text-rose-600 font-extrabold ml-1" title="Xóa bộ lọc">✕</button>
+                            </div>
+                            <div class="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-200 font-semibold uppercase tracking-wider">
+                                Kê khai số hóa
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- THANH TRA CỨU/LỌC DỮ LIỆU CHỨNG TỪ THEO THÁNG -->
+                    <div class="bg-slate-50/75 border-b border-slate-200 px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <span class="font-bold text-slate-600 shrink-0">Tra cứu nhanh theo tháng:</span>
+                            <select id="search-month-select" onchange="onSearchMonthChange()" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-700 focus:border-blue-500 focus:ring-blue-500 w-full sm:w-44">
+                                <option value="all">--- Tất cả các tháng ---</option>
+                            </select>
+                        </div>
+                        <div class="text-[11px] text-slate-500 italic" id="search-result-count">
+                            Hiển thị tất cả chứng từ phát sinh
+                        </div>
+                    </div>
+
+                    <!-- Bảng chính -->
+                    <div class="overflow-x-auto flex-grow">
+                        <table class="w-full text-left text-xs text-slate-600 min-w-[650px]">
+                            <thead class="bg-slate-100 text-slate-700 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                                <tr>
+                                    <th class="py-3 px-3 border-r border-slate-200 text-center w-12">STT</th>
+                                    <th class="py-3 px-3 border-r border-slate-200 text-center w-28">Ngày chứng từ</th>
+                                    <th class="py-3 px-3 border-r border-slate-200 text-center w-28">Số hiệu CT</th>
+                                    <th class="py-3 px-3 border-r border-slate-200">Nội dung diễn giải</th>
+                                    <th class="py-3 px-3 border-r border-slate-200 text-right w-36">Doanh thu ghi sổ</th>
+                                    <th class="py-3 px-3 text-center w-24">Tác vụ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="s1a-table-body" class="divide-y divide-slate-100">
+                                <tr>
+                                    <td colspan="6" class="py-8 text-center text-slate-400 italic">Chưa có dữ liệu nào được nhập. Hãy điền form bên cạnh hoặc tải dữ liệu mẫu!</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-slate-50 font-bold text-slate-900 border-t-2 border-slate-200">
+                                <tr>
+                                    <td colspan="4" class="py-3.5 px-3 border-r border-slate-200 text-right">TỔNG CỘNG DOANH THU LŨY KẾ:</td>
+                                    <td id="s1a-total-sum" class="py-3.5 px-3 border-r border-slate-200 text-right text-blue-600 font-extrabold text-sm">0 đ</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: BÁO CÁO DOANH THU HẰNG THÁNG ==================== -->
+        <section id="tab-content-monthly" class="tab-pane hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4 gap-4">
+                    <div class="flex items-center gap-2.5">
+                        <span class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">Báo Cáo Tổng Hợp Doanh Thu Theo Tháng</h3>
+                            <p class="text-xs text-slate-500">Tự động tổng hợp số liệu 12 tháng từ Sổ doanh thu Mẫu S1a-HKD</p>
+                        </div>
+                    </div>
+                    <button onclick="exportMonthlyReportCSV()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-md shadow-indigo-500/10">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span>Kết xuất bảng tổng hợp (.CSV)</span>
+                    </button>
+                </div>
+
+                <!-- Thông tin cấu hình hiện hành -->
+                <div class="text-xs text-slate-600 flex flex-col md:flex-row justify-between bg-slate-50 p-4 rounded-xl border border-slate-200 gap-4">
+                    <div class="space-y-1">
+                        <p class="font-semibold text-slate-500 uppercase tracking-wider text-[10px]">Đơn vị kê khai</p>
+                        <p class="text-sm font-bold text-slate-900" id="monthly-owner">NGUYỄN VĂN A</p>
+                        <p class="text-xs font-medium">Mã số thuế: <span id="monthly-mst" class="font-mono text-slate-800 font-bold tracking-wider">8034567890</span></p>
+                    </div>
+                    <div class="text-left md:text-right space-y-1">
+                        <p class="font-semibold text-slate-500 uppercase tracking-wider text-[10px]">Tóm lược tài chính năm</p>
+                        <p class="text-xs font-medium">Năm báo cáo: <strong class="text-slate-800">2026</strong></p>
+                        <p class="text-sm font-black text-indigo-600">Tổng doanh thu lũy kế: <span id="monthly-total-year">0 đ</span></p>
+                    </div>
+                </div>
+
+                <!-- Bảng tổng hợp theo tháng -->
+                <div class="overflow-x-auto border rounded-xl shadow-inner bg-slate-50/20">
+                    <table class="w-full text-left text-xs text-slate-600">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="py-3.5 px-4">Tháng/Năm báo cáo</th>
+                                <th class="py-3.5 px-4 text-center">Số chứng từ phát sinh</th>
+                                <th class="py-3.5 px-4 text-right">Doanh thu phát sinh trong tháng</th>
+                                <th class="py-3.5 px-4 text-center">Tỷ trọng đóng góp (%)</th>
+                                <th class="py-3.5 px-4 text-center w-80">Kết xuất hồ sơ nhanh</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthly-summary-table-body" class="divide-y divide-slate-100 bg-white">
+                            <tr>
+                                <td colspan="5" class="py-12 text-center text-slate-400 italic text-sm">Chưa có chứng từ doanh thu nào để tổng hợp hằng tháng.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: TÍNH THUẾ 2026 ==================== -->
+        <section id="tab-content-calc" class="tab-pane block space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Cột trái: Form nhập liệu -->
+                <div class="lg:col-span-1 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                        <span class="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 11h.01M12 7h.01M9 11h.01M12 14h.01M15 11h.01M15 7h.01M4 21h16a2 2 0 002-2V5a2 2 0 00-2-2H4a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </span>
+                        Thông tin kinh doanh
+                    </h3>
+
+                    <!-- Tên chủ hộ kinh doanh -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Tên chủ hộ kinh doanh / Tên HKD</label>
+                        <input type="text" id="calc-owner" oninput="syncCalcToNoti(); saveBusinessInfo();" class="block w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 font-bold focus:border-emerald-500 focus:ring-emerald-500 text-sm" placeholder="Nhập tên chủ hộ hoặc hộ kinh doanh..." value="HỘ KINH DOANH NGUYỄN VĂN A">
+                    </div>
+
+                    <!-- Mã số thuế hộ kinh doanh -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Mã số thuế (10 số)</label>
+                        <input type="text" id="calc-mst" maxlength="10" oninput="syncCalcToNoti(); saveBusinessInfo();" class="block w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 font-bold font-courier tracking-widest focus:border-emerald-500 focus:ring-emerald-500 text-sm" placeholder="MST 10 số..." value="8034567890">
+                    </div>
+
+                    <!-- Địa điểm hoạt động -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Địa chỉ điểm kinh doanh</label>
+                        <textarea id="calc-address" rows="2" oninput="syncCalcToNoti(); saveBusinessInfo();" class="block w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 font-medium focus:border-emerald-500 focus:ring-emerald-500 text-xs" placeholder="Nhập địa chỉ chi tiết...">Số 123 Đường Trần Hưng Đạo, P. Mỹ Xuyên, TP. Long Xuyên, An Giang</textarea>
+                    </div>
+
+                    <!-- Doanh thu dự kiến -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Ước tính doanh thu / Năm (VNĐ)</label>
+                            <!-- Nút đồng bộ doanh thu được di chuyển lên vị trí trực quan cạnh nhãn nhập liệu -->
+                            <button type="button" onclick="syncLedgerToRevenue()" class="flex items-center gap-1.5 text-[10px] bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold px-2.5 py-1.5 rounded-lg transition border border-emerald-200 shadow-sm" title="Tự động đồng bộ doanh thu lũy kế thực tế từ sổ sách S1a">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M7.5 12l3 3m-3-3l-3 3"/>
+                                </svg>
+                                <span>Lấy doanh thu sổ S1a</span>
+                            </button>
+                        </div>
+                        <div class="relative rounded-xl shadow-sm">
+                            <input type="text" id="calc-revenue" oninput="formatAndCalculate(true); saveBusinessInfo();" class="block w-full rounded-xl border border-slate-300 pl-4 pr-16 py-3.5 text-slate-900 font-bold focus:border-emerald-500 focus:ring-emerald-500 text-lg" placeholder="Nhập số tiền..." value="850,000,000">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <span class="text-slate-400 font-semibold text-sm">đ/năm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ngành nghề kinh doanh -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Ngành nghề hoạt động chính</label>
+                        <select id="calc-industry" onchange="onIndustryChange(); saveBusinessInfo();" class="block w-full rounded-xl border border-slate-300 px-4 py-3.5 text-slate-900 font-semibold focus:border-emerald-500 focus:ring-emerald-500">
+                            <option value="dist">Phân phối, cung cấp hàng hóa (Thuế: 1.5%)</option>
+                            <option value="srv_no_mat">Dịch vụ, xây dựng không bao thầu nguyên vật liệu (Thuế: 7%)</option>
+                            <option value="prod_trans">Sản xuất, vận tải, xây dựng có bao thầu NVL (Thuế: 4.5%)</option>
+                            <option value="other">Hoạt động kinh doanh khác (Thuế: 3%)</option>
+                        </select>
+                        <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Hệ thống áp dụng tỷ lệ thuế GTGT & TNCN chuẩn theo Luật thuế sửa đổi áp dụng từ 2026.</p>
+                    </div>
+
+                    <!-- Lựa chọn phương pháp tính thuế khi doanh thu trên 1 tỷ -->
+                    <div id="calc-method-container" class="hidden border-t border-dashed pt-4 space-y-3">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Phương pháp kê khai thuế</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
+                                <input type="radio" name="calc-method" value="revenue" checked onchange="onMethodChange(); saveBusinessInfo();" class="h-4 w-4 text-emerald-600 border-slate-300 focus:ring-emerald-500">
+                                <span class="ml-2.5 text-sm font-medium text-slate-700">Tính theo tỷ lệ doanh thu (Đơn giản)</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
+                                <input type="radio" name="calc-method" value="income" onchange="onMethodChange(); saveBusinessInfo();" class="h-4 w-4 text-emerald-600 border-slate-300 focus:ring-emerald-500">
+                                <span class="ml-2.5 text-sm font-medium text-slate-700">Tính 15% trên thu nhập thực tế</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Chi phí ước tính (khi chọn tính theo thu nhập thực tế) -->
+                        <div id="calc-expense-container" class="hidden animate-fadeIn">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Ước tính Chi phí hợp lý / Năm (VNĐ)</label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <input type="text" id="calc-expense" oninput="formatAndCalculate(true); saveBusinessInfo();" class="block w-full rounded-xl border border-slate-300 pl-4 pr-12 py-3 text-slate-900 font-semibold focus:border-emerald-500 focus:ring-emerald-500" placeholder="Nhập chi phí..." value="400,000,000">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <span class="text-slate-400 text-sm">đ/năm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nút hành động tính thuế -->
+                    <div class="pt-4 border-t border-slate-100 space-y-3">
+                        <button type="button" id="btn-submit-calc" onclick="calculateTax()" class="w-full flex items-center justify-center space-x-2 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all duration-200 shadow-md shadow-emerald-500/10">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 11h.01M12 7h.01M9 11h.01M12 14h.01M15 11h.01M15 7h.01M4 21h16a2 2 0 002-2V5a2 2 0 00-2-2H4a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Tính Thuế Ngay</span>
+                        </button>
+                        <div id="calc-pending-msg" class="hidden bg-amber-50 border border-amber-200 text-amber-800 text-[11px] p-2.5 rounded-lg text-center leading-relaxed">
+                            ⚠️ Số liệu đã thay đổi và vượt ngưỡng 1 tỷ. Hãy nhấp <strong>"Tính Thuế Ngay"</strong> để cập nhật lại nghĩa vụ thuế GTGT & TNCN tương ứng.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cột phải: Hiển thị Kết quả & Phân tích -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Thẻ trạng thái nghĩa vụ thuế -->
+                    <div id="result-status-card" class="bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 p-6 rounded-2xl flex items-start gap-4 shadow-sm">
+                        <div class="bg-emerald-500 text-white p-3 rounded-xl shadow-md shrink-0">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-emerald-900">Trạng thái: Miễn Thuế</h4>
+                            <p class="text-sm text-emerald-700 mt-1.5" id="result-status-desc">
+                                Doanh thu của bạn ước tính là <strong id="desc-revenue-value">850.000.000 đ/năm</strong> (Dưới ngưỡng 1 tỷ đồng). Hộ kinh doanh không phải nộp bất kỳ khoản thuế GTGT & TNCN nào trong năm 2026.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Bảng chi tiết tính thuế -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h4 class="text-base font-bold text-slate-800">Bảng chi tiết nghĩa vụ thuế:</h4>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600">
+                                <thead class="bg-slate-50 text-slate-700 border-b border-slate-100">
+                                    <tr>
+                                        <th class="py-3 px-4 font-semibold rounded-l-lg">Khoản mục</th>
+                                        <th class="py-3 px-4 font-semibold">Tỷ lệ</th>
+                                        <th class="py-3 px-4 font-semibold">Công thức tính toán</th>
+                                        <th class="py-3 px-4 font-semibold text-right rounded-r-lg">Số tiền phải nộp</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <!-- Thuế GTGT -->
+                                    <tr>
+                                        <td class="py-3.5 px-4 font-medium text-slate-900">Thuế Giá trị gia tăng (GTGT)</td>
+                                        <td class="py-3.5 px-4" id="table-vat-rate">1.0%</td>
+                                        <td class="py-3.5 px-4 text-xs font-mono text-slate-500" id="table-vat-formula">-</td>
+                                        <td class="py-3.5 px-4 text-right font-bold text-slate-900" id="table-vat-val">0 đ</td>
+                                    </tr>
+                                    <!-- Thuế TNCN (Cập nhật công thức chuẩn hóa theo yêu cầu) -->
+                                    <tr>
+                                        <td class="py-3.5 px-4 font-medium text-slate-900">Thuế Thu nhập cá nhân (TNCN)</td>
+                                        <td class="py-3.5 px-4" id="table-pit-rate">0.5%</td>
+                                        <td class="py-3.5 px-4 text-xs font-mono text-slate-500" id="table-pit-formula">-</td>
+                                        <td class="py-3.5 px-4 text-right font-bold text-slate-900" id="table-pit-val">0 đ</td>
+                                    </tr>
+                                    <!-- Tổng Thuế -->
+                                    <tr class="bg-slate-50 font-bold text-slate-900">
+                                        <td class="py-4 px-4 rounded-l-lg">TỔNG THUẾ PHẢI NỘP</td>
+                                        <td class="py-4 px-4">-</td>
+                                        <td class="py-4 px-4 text-xs font-mono text-slate-500" id="table-total-formula">-</td>
+                                        <td class="py-4 px-4 text-right text-emerald-600 text-lg rounded-r-lg font-extrabold" id="table-total-tax">0 đ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Chú thích chi tiết và các yêu cầu bổ sung -->
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mt-4 space-y-2">
+                            <h5 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Yêu cầu & Nghĩa vụ hành chính bắt buộc:</h5>
+                            <ul class="text-xs text-slate-500 list-disc list-inside space-y-1.5" id="calc-obligations-list">
+                                <li>Phải lưu trữ và duy trì <strong>Sổ chi tiết doanh thu (Mẫu S1a-HKD)</strong>.</li>
+                                <li>Phải gửi <strong>Thông báo doanh thu thực tế</strong> lên cơ quan thuế trước ngày 31/01 năm tiếp theo.</li>
+                                <li>Được miễn hoàn toàn việc sử dụng hóa đơn điện tử liên kết cơ quan thuế (trừ khi có nhu cầu xuất lẻ).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 4: QUY TRÌNH THỰC HIỆN ==================== -->
+        <section id="tab-content-guide" class="tab-pane hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="max-w-3xl mx-auto space-y-8">
+                    <div class="text-center space-y-2">
+                        <h3 class="text-xl font-extrabold text-slate-800">Hỗ trợ cơ quan Thuế </h3>
+                        <p class="text-sm text-slate-500">Dành riêng cho Hộ kinh doanh có doanh thu dưới 1 tỷ đồng/năm (đối tượng được miễn thuế)</p>
+                    </div>
+
+                    <!-- Trực quan hóa tiến trình Timeline -->
+                    <div class="relative border-l border-slate-200 ml-4 md:ml-6 space-y-8">
+                        <!-- Bước 1 -->
+                        <div class="relative pl-6 sm:pl-8">
+                            <span class="absolute -left-3.5 sm:-left-4 bg-amber-500 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs font-bold ring-4 ring-white shadow">1</span>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:shadow-sm transition">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <h4 class="text-sm font-bold text-slate-800">Khai báo Ban đầu & Cấp Mã số thuế</h4>
+                                    <span class="text-[10px] bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full font-semibold">Bắt buộc</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Thực hiện đăng ký hộ kinh doanh tại Phòng Tài chính - Kế hoạch UBND Quận/Huyện để nhận Giấy chứng nhận đăng ký hộ kinh doanh và Mã số thuế 10 số từ cơ quan Thuế trực thuộc quản lý.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Bước 2 -->
+                        <div class="relative pl-6 sm:pl-8">
+                            <span class="absolute -left-3.5 sm:-left-4 bg-amber-500 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs font-bold ring-4 ring-white shadow">2</span>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:shadow-sm transition">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <h4 class="text-sm font-bold text-slate-800">Lập sổ ghi chép hằng ngày (Mẫu S1a-HKD)</h4>
+                                    <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-semibold font-medium">Hàng ngày</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Ghi chép đều đặn các khoản bán ra vào Sổ S1a-HKD. Với quy định đơn giản hóa, bạn không cần làm nghiệp vụ kế toán phức tạp hay lập bảng cân đối tài sản tài chính, chỉ cần sổ chi tiết doanh thu để chứng minh doanh thu năm dưới 01 tỷ đồng.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Bước 3 -->
+                        <div class="relative pl-6 sm:pl-8">
+                            <span class="absolute -left-3.5 sm:-left-4 bg-amber-500 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs font-bold ring-4 ring-white shadow">3</span>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:shadow-sm transition">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <h4 class="text-sm font-bold text-slate-800">Không bắt buộc xuất hóa đơn liên tục</h4>
+                                    <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-semibold">Tùy chọn</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Hộ kinh doanh thuộc đối tượng miễn thuế không bắt buộc sử dụng Hóa đơn điện tử liên thông theo từng hóa đơn lẻ. Chỉ khi có đối tác yêu cầu xuất hóa đơn lẻ, bạn mới lên cơ quan thuế làm thủ tục mua hóa đơn lẻ theo từng lần phát sinh.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Bước 4 -->
+                        <div class="relative pl-6 sm:pl-8">
+                            <span class="absolute -left-3.5 sm:-left-4 bg-amber-500 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs font-bold ring-4 ring-white shadow">4</span>
+                            <div class="bg-amber-600 text-white p-4 rounded-xl shadow-sm transition">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <h4 class="text-sm font-bold">Nộp thông báo doanh thu hàng năm</h4>
+                                    <span class="text-[10px] bg-white/20 text-white px-2 py-0.5 rounded-full font-semibold">Trước 31/01</span>
+                                </div>
+                                <p class="text-xs text-amber-50 leading-relaxed">
+                                    Thủ tục hành chính duy nhất cần thực hiện cuối năm tài chính: Tổng hợp số liệu trên Sổ S1a-HKD và nộp mẫu <strong>Thông báo doanh thu thực tế năm</strong> qua ứng dụng <strong>eTax Mobile</strong> hoặc Cổng dịch vụ công của Tổng cục Thuế. Hạn chót nộp: <strong>Ngày 31 tháng 01 của năm tiếp theo</strong>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Khối FAQ câu hỏi hay gặp -->
+                    <div class="border-t pt-6 space-y-4">
+                        <h4 class="text-base font-bold text-slate-800">Các câu hỏi thường gặp (FAQ)</h4>
+                        
+                        <div class="space-y-3">
+                            <div class="p-3 bg-amber-50 rounded-lg border border-amber-100">
+                                <h5 class="text-xs font-bold text-amber-900">Nếu doanh thu đột biến vượt 1 tỷ giữa năm thì sao?</h5>
+                                <p class="text-xs text-amber-800 mt-1">
+                                    Nếu phát sinh doanh thu lũy kế vượt 01 tỷ, bạn phải thực hiện kê khai và nộp thuế đối với phần vượt theo tỷ lệ của ngành nghề hoặc đăng ký chuyển đổi sang phương pháp kê khai thu nhập thực tế.
+                                </p>
+                            </div>
+
+                            <div class="p-3 bg-slate-100 rounded-lg">
+                                <h5 class="text-xs font-bold text-slate-800">Tôi có cần nộp báo cáo thuế theo quý nữa không?</h5>
+                                <p class="text-xs text-slate-600 mt-1">
+                                    Không. Hộ kinh doanh thuộc diện miễn thuế không cần nộp tờ khai quý. Trừ phi thuộc nhóm kê khai hóa đơn hoặc có doanh thu trên 01 tỷ mới áp dụng tờ khai định kỳ.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 5: THÔNG BÁO MẪU GỬI CƠ QUAN THUẾ ==================== -->
+        <section id="tab-content-noti" class="tab-pane hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Cột trái: Bảng thiết lập thông số mẫu báo cáo -->
+                <div class="lg:col-span-1 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                    <div class="flex items-center justify-between border-b pb-3">
+                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="p-1.5 bg-purple-50 text-purple-600 rounded-lg">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </span>
+                            Cấu hình thông báo
+                        </h4>
+                    </div>
+
+                    <div class="space-y-3.5 text-xs text-slate-600">
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Cơ quan thuế quản lý trực tiếp</label>
+                            <input type="text" id="noti-tax-office" oninput="updateNotiPreview()" value="Chi Cục Thuế Thành Phố Long Xuyên" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-purple-500 focus:ring-purple-500 font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Tên Hộ kinh doanh / Người nộp thuế</label>
+                            <input type="text" id="noti-name" oninput="syncNotiToCalc()" value="HỘ KINH DOANH NGUYỄN VĂN A" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-purple-500 focus:ring-purple-500 font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Mã số thuế hộ kinh doanh</label>
+                            <input type="text" id="noti-mst" oninput="syncNotiToCalc()" value="8034567890" placeholder="MST 10 số..." class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-purple-500 focus:ring-purple-500 font-medium font-courier tracking-wider">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Địa điểm hoạt động sản xuất kinh doanh</label>
+                            <input type="text" id="noti-address" oninput="syncNotiToCalc()" value="Số 123 Đường Trần Hưng Đạo, P. Mỹ Xuyên, TP. Long Xuyên, An Giang" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-purple-500 focus:ring-purple-500 font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Ngành nghề đăng ký chính</label>
+                            <input type="text" id="noti-industry" oninput="updateNotiPreview()" value="Bán buôn linh kiện, phụ kiện điện tử và lắp ráp thiết bị máy văn phòng" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-purple-500 focus:ring-purple-500 font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Năm báo cáo doanh thu thực tế</label>
+                            <input type="number" id="noti-year" oninput="updateNotiPreview()" value="2026" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-purple-500 focus:ring-purple-500 font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Doanh thu phát sinh thực tế (VNĐ)</label>
+                            <input type="text" id="noti-revenue" oninput="formatNotiRevenue()" value="850,000,000" class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-purple-500 focus:ring-purple-500 font-bold">
+                        </div>
+                    </div>
+
+                    <!-- Thanh tác vụ trực tiếp -->
+                    <div class="pt-3 border-t grid grid-cols-2 gap-2">
+                        <button onclick="copyNotiRawText()" class="flex items-center justify-center space-x-1 py-2.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg text-xs font-semibold transition">
+                            <svg class="w-4 h-4"><use href="#icon-copy"></use></svg>
+                            <span>Sao chép văn bản</span>
+                        </button>
+                        <button onclick="printNoti()" class="flex items-center justify-center space-x-1 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-semibold transition shadow-sm">
+                            <svg class="w-4 h-4"><use href="#icon-print"></use></svg>
+                            <span>In tờ thông báo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cột phải: Khối giả lập Tờ Khai in thực tế -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="bg-amber-50 border border-amber-200 text-amber-800 p-3.5 rounded-xl text-xs leading-relaxed flex gap-2">
+                        <span class="text-base">💡</span>
+                        <span>
+                            <strong>Quy định 2026:</strong> Tờ thông báo này được cấu trúc theo đúng thể thức văn bản hành chính quy định. Bạn có thể in trực tiếp, xuất file PDF hoặc sử dụng các dữ liệu này để kê khai trực tuyến chính xác trên hệ thống <strong>eTax Mobile</strong> của Tổng cục Thuế trước ngày <strong>31/01/2027</strong>.
+                        </span>
+                    </div>
+
+                    <!-- Trang giả lập in văn bản hành chính -->
+                    <div class="bg-white border border-slate-300 p-8 sm:p-12 shadow-md rounded-xl text-slate-900 leading-normal select-text text-sm relative" id="print-area">
+                        <!-- Dấu ấn pháp lý tượng trưng -->
+                        <div class="absolute right-4 top-4 border-2 border-emerald-600/30 text-emerald-600/30 text-[10px] font-bold py-1 px-2 uppercase rounded transform rotate-12 tracking-wide pointer-events-none">
+                            Mẫu thông báo 152
+                        </div>
+
+                        <!-- Header -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 text-center md:text-left gap-4 pb-6 border-b border-slate-300">
+                            <div>
+                                <h5 class="font-bold text-xs uppercase text-slate-700">CƠ QUAN THUẾ QUẢN LÝ</h5>
+                                <h5 class="font-bold text-xs uppercase underline tracking-tight" id="lbl-tax-office-header">CHI CỤC THUẾ THÀNH PHỐ LONG XUYÊN</h5>
+                            </div>
+                            <div class="text-center md:text-right">
+                                <h5 class="font-bold text-xs uppercase">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h5>
+                                <h6 class="text-xs font-semibold">Độc lập - Tự do - Hạnh phúc</h6>
+                                <p class="text-[11px] text-slate-500 italic mt-1" id="lbl-date-place">..., ngày ... tháng ... năm 2026</p>
+                            </div>
+                        </div>
+
+                        <!-- Tiêu đề tiêu chuẩn -->
+                        <div class="text-center py-8 space-y-1">
+                            <h3 class="text-base sm:text-lg font-bold uppercase tracking-wide">THÔNG BÁO</h3>
+                            <h4 class="text-sm sm:text-base font-extrabold uppercase">DOANH THU THỰC TẾ PHÁT SINH TRONG NĂM</h4>
+                            <p class="text-xs italic text-slate-600" id="lbl-noti-year">Áp dụng cho năm tài chính: 2026</p>
+                            <p class="text-[11px] text-slate-400 italic">(Dành riêng cho Hộ kinh doanh thuộc diện tự kê khai miễn thuế dưới 01 tỷ đồng/năm)</p>
+                        </div>
+
+                        <!-- Nội dung chi tiết văn bản -->
+                        <div class="space-y-4 text-xs sm:text-sm">
+                            <p class="italic text-slate-700">Kính gửi: <span class="font-bold not-italic" id="lbl-tax-office">Chi Cục Thuế Thành Phố Long Xuyên</span></p>
+
+                            <div class="space-y-2.5">
+                                <p>Tôi tên là: <span class="font-bold underline" id="lbl-name">NGUYỄN VĂN A</span></p>
+                                <p>Là đại diện hợp pháp của Hộ kinh doanh: <span class="font-semibold" id="lbl-hkd-name">HỘ KINH DOANH NGUYỄN VĂN A</span></p>
+                                <p>Mã số thuế hộ kinh doanh: <span class="font-courier font-bold tracking-widest text-base" id="lbl-mst">8034567890</span></p>
+                                <p>Địa chỉ điểm kinh doanh: <span class="font-medium text-slate-800" id="lbl-address">Số 123 Đường Trần Hưng Đạo, P. Mỹ Xuyên, TP. Long Xuyên, An Giang</span></p>
+                                <p>Ngành nghề hoạt động chính: <span class="font-medium text-slate-800" id="lbl-industry">Bán buôn linh kiện, phụ kiện điện tử và lắp ráp thiết bị máy văn phòng</span></p>
+                            </div>
+
+                            <p class="leading-relaxed text-justify">
+                                Căn cứ quy định về quản lý thuế hộ kinh doanh áp dụng cho năm tài chính <span class="font-bold" id="lbl-year">2026</span> tại Thông tư 152/2025/TT-BTC, tôi thực hiện lập sổ sách theo dõi Mẫu S1a-HKD và tự tổng hợp số liệu báo doanh thu cụ thể như sau:
+                            </p>
+
+                            <!-- Hộp tài chính nổi bật -->
+                            <div class="bg-slate-50 border border-slate-300 rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                                    <span class="font-bold text-slate-700">Mô tả chỉ tiêu doanh thu</span>
+                                    <span class="font-bold text-slate-700">Tổng doanh thu lũy kế cả năm</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-900">
+                                    <span class="font-semibold">Doanh thu ghi sổ thực tế (Mẫu S1a-HKD):</span>
+                                    <span class="font-extrabold text-slate-950 text-base font-courier" id="lbl-revenue">850.000.000 đ</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-emerald-700 font-semibold pt-1">
+                                    <span>Đánh giá nghĩa vụ thuế:</span>
+                                    <span class="uppercase tracking-wide" id="lbl-evaluation">Thuộc diện miễn hoàn toàn thuế GTGT & TNCN (&lt; 01 tỷ đồng/năm)</span>
+                                </div>
+                            </div>
+
+                            <p class="leading-relaxed text-justify">
+                                Tôi cam đoan toàn bộ số liệu doanh thu nêu trên được ghi nhận đầy đủ, trung thực, chính xác dựa trên Sổ chi tiết doanh thu bán hàng hóa, dịch vụ và hoàn toàn chịu trách nhiệm trước pháp luật Việt Nam nếu có bất cứ hành vi sai lệch hoặc trốn tránh nghĩa vụ thuế.
+                            </p>
+                        </div>
+
+                        <!-- Chữ ký số / Xác nhận ký tay -->
+                        <div class="grid grid-cols-2 text-center pt-12 text-xs sm:text-sm">
+                            <div class="space-y-1">
+                                <h5 class="font-bold">ĐẠI DIỆN HỘ KINH DOANH</h5>
+                                <p class="text-[11px] text-slate-500 italic">(Ký, ghi rõ họ tên và đóng dấu nếu có)</p>
+                                <div class="h-20"></div>
+                                <p class="font-bold underline" id="lbl-footer-name">NGUYỄN VĂN A</p>
+                            </div>
+                            <div class="space-y-1">
+                                <h5 class="font-bold">XÁC NHẬN CỦA CƠ QUAN THUẾ</h5>
+                                <p class="text-[11px] text-slate-500 italic">(Nhân viên tiếp nhận ghi nhận thông tin)</p>
+                                <div class="h-20"></div>
+                                <p class="text-slate-400 italic">... Ngày nhận ...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER: Thiết kế phần chân trang web thông tin nguồn tham khảo luật... -->
+    <footer class="bg-blue-600 text-slate-100 text-xs py-8 border-t border-slate-800 mt-auto transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+            <p class="font-bold text-slate-200">@Hinhhai HiTech - Hệ thống hỗ trợ kê khai, tự động hóa sổ sách Hộ kinh doanh áp dụng năm 2026.</p>
+            <p class="text-slate-300">Mẫu S1a-HKD ban hành theo Thông tư 152/2025/TT-BTC & Nghị định 141/2026/NĐ-CP của Chính phủ.</p>
+        </div>
+    </footer>
+
+    <!-- HỘP THOẠI MODAL XÁC NHẬN TÙY CHỈNH (Thay thế hoàn toàn alert & confirm mặc định) -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white rounded-2xl max-w-md w-full mx-4 overflow-hidden shadow-2xl border border-slate-200 transform scale-95 transition-all duration-300" id="confirm-modal-card">
+            <div class="p-6 space-y-4">
+                <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+                <div class="text-center space-y-2">
+                    <h4 class="text-lg font-bold text-slate-800" id="confirm-title">Cảnh báo hành động</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed" id="confirm-message">Bạn có chắc chắn thực hiện thao tác này? Dữ liệu đã xóa sẽ không thể phục hồi lại được.</p>
+                </div>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex items-center justify-end space-x-2 border-t border-slate-100">
+                <button onclick="closeConfirmModal(false)" class="px-4 py-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg transition">Hủy bỏ</button>
+                <button onclick="closeConfirmModal(true)" id="btn-modal-confirm" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold rounded-lg transition shadow-sm">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HỘP THOẠI TOAST THÔNG BÁO NHANH -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 text-white px-4 py-3.5 rounded-xl shadow-2xl flex items-center space-x-2.5 border border-slate-700">
+            <span id="toast-icon" class="text-emerald-400">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </span>
+            <span id="toast-message" class="text-sm font-semibold">Thông báo thành công!</span>
+        </div>
+    </div>
+
+
+    <!-- ==================== PHẦN XỬ LÝ SỰ KIỆN JAVASCRIPT ==================== -->
+    <script>
+        // Bản đồ tỷ lệ tính thuế suất hộ kinh doanh 2026
+        const industryRates = {
+            dist: { vat: 0.01, pit: 0.005, label: "Phân phối, cung cấp hàng hóa" },
+            srv_no_mat: { vat: 0.05, pit: 0.02, label: "Dịch vụ, xây dựng không bao thầu NVL" },
+            prod_trans: { vat: 0.03, pit: 0.015, label: "Sản xuất, vận tải, xây dựng có bao thầu NVL" },
+            other: { vat: 0.02, pit: 0.01, label: "Hoạt động kinh doanh khác" }
+        };
+
+        // Thiết lập giao diện màu sắc trực quan tương ứng với từng Tab điều hướng (Bổ sung cấu hình cho tab monthly)
+        const tabStyles = {
+            book: {
+                active: "bg-blue-600 text-white border-blue-500 hover:bg-blue-700 shadow-blue-500/10",
+                inactive: "text-blue-100 hover:bg-white/10 hover:text-white border-slate-700 hover:border-blue-500/50 bg-slate-850",
+                noticeBg: "bg-blue-50 border-blue-100 text-blue-800",
+                badgeBg: "bg-blue-500 text-white"
+            },
+            monthly: {
+                active: "bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700 shadow-indigo-500/10",
+                inactive: "text-indigo-100 hover:bg-white/10 hover:text-white border-slate-700 hover:border-indigo-500/50 bg-slate-850",
+                noticeBg: "bg-indigo-50 border-indigo-100 text-indigo-800",
+                badgeBg: "bg-indigo-500 text-white"
+            },
+            calc: {
+                active: "bg-emerald-600 text-white border-emerald-500 hover:bg-emerald-700 shadow-emerald-500/10",
+                inactive: "text-emerald-100 hover:bg-white/10 hover:text-white border-slate-700 hover:border-emerald-500/50 bg-slate-850",
+                noticeBg: "bg-emerald-50 border-emerald-100 text-emerald-800",
+                badgeBg: "bg-emerald-500 text-white"
+            },
+            guide: {
+                active: "bg-amber-600 text-white border-amber-500 hover:bg-amber-700 shadow-amber-500/10",
+                inactive: "text-amber-100 hover:bg-white/10 hover:text-white border-slate-700 hover:border-amber-500/50 bg-slate-850",
+                noticeBg: "bg-amber-50 border-amber-100 text-amber-800",
+                badgeBg: "bg-amber-500 text-white"
+            },
+            noti: {
+                active: "bg-purple-600 text-white border-purple-500 hover:bg-purple-700 shadow-purple-500/10",
+                inactive: "text-purple-100 hover:bg-white/10 hover:text-white border-slate-700 hover:border-purple-500/50 bg-slate-850",
+                noticeBg: "bg-purple-50 border-purple-100 text-purple-800",
+                badgeBg: "bg-purple-500 text-white"
+            }
+        };
+
+        // Biến trạng thái toàn cục
+        let ledgerEntries = [];
+        let activeTab = 'calc';
+        let confirmActionCallback = null;
+        let calculationPending = false;
+        let filterMonth = 'all'; // Định dạng lưu trữ bộ lọc: 'MM/YYYY' hoặc 'all'
+
+        // Khi cửa sổ ứng dụng khởi động
+        window.onload = function() {
+            // Đặt ngày hiện tại mặc định cho bộ nhập sổ sách S1a
+            const today = new Date();
+            document.getElementById('entry-date').value = today.toISOString().split('T')[0];
+
+            // Cập nhật vị trí, ngày tháng năm hành chính thực tế
+            const currentYear = today.getFullYear();
+            const currentMonth = today.getMonth() + 1;
+            const currentDay = today.getDate();
+            document.getElementById('lbl-date-place').innerText = `Long Xuyên, ngày ${currentDay} tháng ${currentMonth} năm ${currentYear}`;
+
+            // 1. Phục hồi dữ liệu Hộ kinh doanh hằng ngày đã lưu
+            loadBusinessInfo();
+
+            // 2. Nạp dữ liệu sổ sách từ bộ nhớ trình duyệt localStorage
+            const savedLedger = localStorage.getItem('hkd_ledger_2026');
+            if (savedLedger) {
+                ledgerEntries = JSON.parse(savedLedger);
+            } else {
+                // Tự động tải trước dữ liệu demo mẫu để giao diện trực quan
+                loadSampleEntries(false);
+            }
+
+            // Kích hoạt tab đầu tiên và tính toán khởi tạo
+            switchTab('calc');
+            formatAndCalculate(false);
+            renderLedger();
+            syncCalcToNoti();
+        };
+
+        // LƯU TRỮ THÔNG TIN HỘ KINH DOANH TỰ ĐỘNG
+        function saveBusinessInfo() {
+            const bizData = {
+                owner: document.getElementById('calc-owner').value,
+                mst: document.getElementById('calc-mst').value,
+                address: document.getElementById('calc-address').value,
+                revenue: document.getElementById('calc-revenue').value,
+                industry: document.getElementById('calc-industry').value,
+                method: document.querySelector('input[name="calc-method"]:checked') ? document.querySelector('input[name="calc-method"]:checked').value : 'revenue',
+                expense: document.getElementById('calc-expense').value
+            };
+            localStorage.setItem('hkd_biz_info_2026', JSON.stringify(bizData));
+        }
+
+        function loadBusinessInfo() {
+            const savedBiz = localStorage.getItem('hkd_biz_info_2026');
+            if (savedBiz) {
+                try {
+                    const bizData = JSON.parse(savedBiz);
+                    if (bizData.owner !== undefined) document.getElementById('calc-owner').value = bizData.owner;
+                    if (bizData.mst !== undefined) document.getElementById('calc-mst').value = bizData.mst;
+                    if (bizData.address !== undefined) document.getElementById('calc-address').value = bizData.address;
+                    if (bizData.revenue !== undefined) document.getElementById('calc-revenue').value = bizData.revenue;
+                    if (bizData.industry !== undefined) document.getElementById('calc-industry').value = bizData.industry;
+                    if (bizData.expense !== undefined) document.getElementById('calc-expense').value = bizData.expense;
+                    
+                    if (bizData.method) {
+                        const radioBtn = document.querySelector(`input[name="calc-method"][value="${bizData.method}"]`);
+                        if (radioBtn) {
+                            radioBtn.checked = true;
+                            // Kích hoạt hiển thị container chi phí nếu chọn phương pháp thu nhập thực tế
+                            const expenseContainer = document.getElementById('calc-expense-container');
+                            if (bizData.method === 'income') {
+                                expenseContainer.classList.remove('hidden');
+                            } else {
+                                expenseContainer.classList.add('hidden');
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error("Lỗi khi khôi phục dữ liệu Hộ kinh doanh:", e);
+                }
+            }
+        }
+
+        // Đồng bộ hóa thông tin từ form Tính thuế sang form Cấu hình thông báo mẫu
+        function syncCalcToNoti() {
+            const owner = document.getElementById('calc-owner').value;
+            const mst = document.getElementById('calc-mst').value;
+            const address = document.getElementById('calc-address').value;
+
+            document.getElementById('noti-name').value = owner;
+            document.getElementById('noti-mst').value = mst;
+            document.getElementById('noti-address').value = address;
+
+            updateNotiPreview();
+        }
+
+        // Đồng bộ hóa ngược lại từ form Thông báo mẫu về form Tính thuế
+        function syncNotiToCalc() {
+            const notiName = document.getElementById('noti-name').value;
+            const notiMst = document.getElementById('noti-mst').value;
+            const notiAddress = document.getElementById('noti-address').value;
+
+            document.getElementById('calc-owner').value = notiName;
+            document.getElementById('calc-mst').value = notiMst;
+            document.getElementById('calc-address').value = notiAddress;
+
+            saveBusinessInfo();
+            updateNotiPreview();
+        }
+
+        // Định dạng phân tách phần nghìn cho số tiền và tính toán lại thuế suất trực tiếp
+        function formatAndCalculate(isInputEvent = false) {
+            const revInput = document.getElementById('calc-revenue');
+            let value = revInput.value.replace(/\D/g, "");
+            if (value === "") value = "0";
+            revInput.value = parseInt(value).toLocaleString('vi-VN');
+
+            const expInput = document.getElementById('calc-expense');
+            let expValue = expInput.value.replace(/\D/g, "");
+            if (expValue === "") expValue = "0";
+            expInput.value = parseInt(expValue).toLocaleString('vi-VN');
+
+            const annualRevenue = parseInt(value) || 0;
+
+            // Đồng bộ giá trị doanh thu sang biểu mẫu nộp thông báo
+            document.getElementById('noti-revenue').value = revInput.value;
+            updateNotiPreview();
+
+            // Nếu doanh thu vượt 1 tỷ đồng, yêu cầu xác nhận bấm nút để tránh lag khi tự động chạy
+            if (isInputEvent && annualRevenue >= 1000000000) {
+                calculationPending = true;
+                const btn = document.getElementById('btn-submit-calc');
+                if (btn) {
+                    btn.classList.add('animate-pulse', 'bg-amber-600', 'hover:bg-amber-700');
+                    btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+                }
+                const msg = document.getElementById('calc-pending-msg');
+                if (msg) msg.classList.remove('hidden');
+                return;
+            }
+
+            calculateTax();
+        }
+
+        // Khi người dùng thay đổi ngành nghề hoạt động kinh doanh
+        function onIndustryChange() {
+            const rawRevenue = document.getElementById('calc-revenue').value.replace(/\D/g, "");
+            const annualRevenue = parseInt(rawRevenue) || 0;
+            
+            if (annualRevenue >= 1000000000) {
+                calculationPending = true;
+                const btn = document.getElementById('btn-submit-calc');
+                if (btn) {
+                    btn.classList.add('animate-pulse', 'bg-amber-600', 'hover:bg-amber-700');
+                    btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+                }
+                const msg = document.getElementById('calc-pending-msg');
+                if (msg) msg.classList.remove('hidden');
+            } else {
+                calculateTax();
+            }
+        }
+
+        // Khi người dùng thay đổi phương pháp kê khai (trên doanh thu hoặc thực tế chi phí)
+        function onMethodChange() {
+            const activeMethod = document.querySelector('input[name="calc-method"]:checked').value;
+            const expenseContainer = document.getElementById('calc-expense-container');
+            if (activeMethod === 'income') {
+                expenseContainer.classList.remove('hidden');
+            } else {
+                expenseContainer.classList.add('hidden');
+            }
+            
+            calculationPending = true;
+            const btn = document.getElementById('btn-submit-calc');
+            if (btn) {
+                btn.classList.add('animate-pulse', 'bg-amber-600', 'hover:bg-amber-700');
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+            }
+            const msg = document.getElementById('calc-pending-msg');
+            if (msg) msg.classList.remove('hidden');
+        }
+
+        // Định dạng nhanh hiển thị dạng VNĐ
+        function formatVND(number) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number).replace('₫', 'đ');
+        }
+
+        // XỬ LÝ LÝ THUYẾT VÀ TÍNH THUẾ THỰC TẾ 2026
+        function calculateTax() {
+            calculationPending = false;
+            const btn = document.getElementById('btn-submit-calc');
+            if (btn) {
+                btn.classList.remove('animate-pulse', 'bg-amber-600', 'hover:bg-amber-700');
+                btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+            }
+            const msg = document.getElementById('calc-pending-msg');
+            if (msg) msg.classList.add('hidden');
+
+            const rawRevenue = document.getElementById('calc-revenue').value.replace(/\D/g, "");
+            const annualRevenue = parseInt(rawRevenue) || 0;
+            const industry = document.getElementById('calc-industry').value;
+            const rateInfo = industryRates[industry];
+
+            const descRevEl = document.getElementById('desc-revenue-value');
+            if (descRevEl) {
+                descRevEl.innerText = formatVND(annualRevenue) + "/năm";
+            }
+
+            const statusCard = document.getElementById('result-status-card');
+            const statusDesc = document.getElementById('result-status-desc');
+            const methodContainer = document.getElementById('calc-method-container');
+            const expenseContainer = document.getElementById('calc-expense-container');
+
+            const vatFormulaEl = document.getElementById('table-vat-formula');
+            const pitFormulaEl = document.getElementById('table-pit-formula');
+            const totalFormulaEl = document.getElementById('table-total-formula');
+
+            let vatTax = 0;
+            let pitTax = 0;
+            let totalTax = 0;
+
+            if (annualRevenue < 1000000000) {
+                // Nhỏ hơn 1 Tỷ đồng: Được miễn hoàn toàn thuế GTGT & TNCN
+                methodContainer.classList.add('hidden');
+                expenseContainer.classList.add('hidden');
+
+                statusCard.className = "bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 p-6 rounded-2xl flex items-start gap-4 shadow-sm";
+                statusCard.querySelector('h4').className = "text-lg font-bold text-emerald-900";
+                statusCard.querySelector('h4').innerText = "Trạng thái: Miễn Thuế";
+                statusDesc.innerHTML = `Doanh thu của bạn ước tính là <strong id="desc-revenue-value">${formatVND(annualRevenue)}/năm</strong> (Dưới ngưỡng 1 tỷ đồng). Hộ kinh doanh không thuộc diện phải đóng thuế GTGT và TNCN trong năm 2026.`;
+
+                // Tính toán công thức giả thuyết nếu không được miễn
+                const rawVat = annualRevenue * rateInfo.vat;
+
+                document.getElementById('table-vat-rate').innerText = `${(rateInfo.vat * 100).toFixed(1)}% (Miễn)`;
+                document.getElementById('table-pit-rate').innerText = `${(rateInfo.pit * 100).toFixed(1)}% (Miễn)`;
+                
+                vatFormulaEl.innerText = `${formatVND(annualRevenue)} × ${(rateInfo.vat * 100).toFixed(1)}% = ${formatVND(rawVat)}`;
+                // CẬP NHẬT CÔNG THỨC THEO YÊU CẦU: (Doanh thu - 1.000.000.000) × tỷ lệ
+                pitFormulaEl.innerText = `(${formatVND(annualRevenue)} - 1.000.000.000) × ${(rateInfo.pit * 100).toFixed(1)}% = 0 đ`;
+                totalFormulaEl.innerText = "Miễn nộp (Doanh thu dưới 1 Tỷ)";
+
+                document.getElementById('table-vat-val').innerText = "0 đ";
+                document.getElementById('table-pit-val').innerText = "0 đ";
+                document.getElementById('table-total-tax').innerText = "0 đ";
+
+                document.getElementById('calc-obligations-list').innerHTML = `
+                    <li>Bắt buộc duy trì <strong>Sổ chi tiết doanh thu (Mẫu S1a-HKD)</strong> hằng ngày.</li>
+                    <li>Phải nộp <strong>Thông báo doanh thu thực tế năm</strong> trước ngày 31/01 năm tiếp theo (Nộp online qua ứng dụng eTax Mobile).</li>
+                    <li>Không phải đăng ký hóa đơn điện tử bắt buộc, chỉ làm thủ tục hóa đơn lẻ tại cơ quan thuế nếu khách hàng cần xuất hóa đơn lẻ.</li>
+                `;
+            } else if (annualRevenue >= 1000000000 && annualRevenue <= 3000000000) {
+                // Từ 1 Tỷ đến 3 Tỷ đồng: Có nghĩa vụ nộp thuế tự chọn cách kê khai
+                methodContainer.classList.remove('hidden');
+                const activeMethod = document.querySelector('input[name="calc-method"]:checked').value;
+
+                if (activeMethod === 'revenue') {
+                    expenseContainer.classList.add('hidden');
+                    vatTax = annualRevenue * rateInfo.vat;
+                    // Thuế TNCN chỉ thu trên phần doanh thu thực tế vượt quá 1 tỷ đồng
+                    pitTax = (annualRevenue - 1000000000) * rateInfo.pit; 
+                    totalTax = vatTax + pitTax;
+
+                    document.getElementById('table-vat-rate').innerText = `${(rateInfo.vat * 100).toFixed(1)}%`;
+                    document.getElementById('table-pit-rate').innerText = `${(rateInfo.pit * 100).toFixed(1)}%`;
+
+                    vatFormulaEl.innerText = `${formatVND(annualRevenue)} × ${(rateInfo.vat * 100).toFixed(1)}%`;
+                    // CẬP NHẬT CÔNG THỨC THEO YÊU CẦU: (Doanh thu - 1.000.000.000) × tỷ lệ
+                    pitFormulaEl.innerText = `(${formatVND(annualRevenue)} - 1.000.000.000) × ${(rateInfo.pit * 100).toFixed(1)}%`;
+                    totalFormulaEl.innerText = `${formatVND(vatTax)} + ${formatVND(pitTax)}`;
+
+                    document.getElementById('table-vat-val').innerText = formatVND(vatTax);
+                    document.getElementById('table-pit-val').innerText = formatVND(pitTax);
+                } else {
+                    expenseContainer.classList.remove('hidden');
+                    const rawExpense = document.getElementById('calc-expense').value.replace(/\D/g, "");
+                    const annualExpense = parseInt(rawExpense) || 0;
+                    const actualIncome = Math.max(0, annualRevenue - annualExpense);
+                    totalTax = actualIncome * 0.15;
+
+                    document.getElementById('table-vat-rate').innerText = "-";
+                    document.getElementById('table-pit-rate').innerText = "15% (Thu nhập)";
+
+                    vatFormulaEl.innerText = "Tính gộp theo thu nhập thực tế";
+                    pitFormulaEl.innerText = `(${formatVND(annualRevenue)} - ${formatVND(annualExpense)}) × 15%`;
+                    totalFormulaEl.innerText = `${formatVND(actualIncome)} × 15%`;
+
+                    document.getElementById('table-vat-val').innerText = "Đã tính gộp";
+                    document.getElementById('table-pit-val').innerText = formatVND(totalTax);
+                }
+
+                statusCard.className = "bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 p-6 rounded-2xl flex items-start gap-4 shadow-sm";
+                statusCard.querySelector('h4').className = "text-lg font-bold text-amber-900";
+                statusCard.querySelector('h4').innerText = "Trạng thái: Có Nghĩa Vụ Kê Khai Thuế";
+                statusDesc.innerHTML = `Doanh thu đạt <strong id="desc-revenue-value">${formatVND(annualRevenue)}/năm</strong>. Bạn thuộc nhóm được tự chọn cách tính thuế: Tính nhanh theo tỷ lệ hoặc nộp 15% trên thu nhập thực tế sau khi trừ chi phí.`;
+                document.getElementById('table-total-tax').innerText = formatVND(totalTax);
+
+                document.getElementById('calc-obligations-list').innerHTML = `
+                    <li>Phải đăng ký tài khoản kê khai thuế điện tử và tự nộp báo cáo.</li>
+                    <li>Sử dụng <strong>Hóa đơn điện tử</strong> khi bán hàng cho đối tác có nhu cầu.</li>
+                    <li>Nếu chọn nộp theo thu nhập thực tế: Bắt buộc lưu trữ toàn bộ hóa đơn chứng từ đầu vào tối thiểu 5 năm để phục vụ đối soát cơ quan quản lý.</li>
+                `;
+            } else {
+                // Trên 3 Tỷ đồng: Bắt buộc chuyển sang chế độ khấu trừ thuế
+                methodContainer.classList.add('hidden');
+                expenseContainer.classList.add('hidden');
+
+                vatTax = annualRevenue * rateInfo.vat;
+                pitTax = (annualRevenue - 1000000000) * rateInfo.pit; 
+                totalTax = vatTax + pitTax;
+
+                document.getElementById('table-vat-rate').innerText = `${(rateInfo.vat * 100).toFixed(1)}%`;
+                document.getElementById('table-pit-rate').innerText = `${(rateInfo.pit * 100).toFixed(1)}%`;
+
+                vatFormulaEl.innerText = `${formatVND(annualRevenue)} × ${(rateInfo.vat * 100).toFixed(1)}%`;
+                // CẬP NHẬT CÔNG THỨC THEO YÊU CẦU: (Doanh thu - 1.000.000.000) × tỷ lệ
+                pitFormulaEl.innerText = `(${formatVND(annualRevenue)} - 1.000.000.000) × ${(rateInfo.pit * 100).toFixed(1)}%`;
+                totalFormulaEl.innerText = `${formatVND(vatTax)} + ${formatVND(pitTax)}`;
+
+                statusCard.className = "bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-200 p-6 rounded-2xl flex items-start gap-4 shadow-sm";
+                statusCard.querySelector('h4').className = "text-lg font-bold text-rose-950";
+                statusCard.querySelector('h4').innerText = "Trạng thái: Bắt Buộc Áp Dụng Phương Pháp Khấu Trừ";
+                statusDesc.innerHTML = `Doanh thu đạt <strong id="desc-revenue-value">${formatVND(annualRevenue)}/năm</strong> (Vượt quá 3 tỷ đồng). Bạn bắt buộc phải áp dụng phương pháp khấu trừ thuế và sử dụng hóa đơn điện tử liên thông trực tiếp cơ quan thuế quản lý.`;
+
+                document.getElementById('table-vat-val').innerText = formatVND(vatTax);
+                document.getElementById('table-pit-val').innerText = formatVND(pitTax);
+                document.getElementById('table-total-tax').innerText = formatVND(totalTax);
+
+                document.getElementById('calc-obligations-list').innerHTML = `
+                    <li>Sử dụng hoàn toàn hóa đơn điện tử có mã của cơ quan thuế theo từng giao dịch phát sinh hằng ngày.</li>
+                    <li>Mở đầy đủ hệ thống sổ sách kế toán tiêu chuẩn (Sổ chi phí, sổ doanh thu, sổ quỹ tiền mặt...).</li>
+                    <li>Báo cáo thuế GTGT và TNCN định kỳ hàng tháng hoặc hàng quý theo đúng quy chuẩn.</li>
+                `;
+            }
+        }
+
+        // Chuyển đổi qua lại giữa các Tab chức năng hệ thống
+        function switchTab(tabId) {
+            // Ẩn tất cả các khu vực nội dung
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+            // Hiển thị khu vực nội dung được chọn
+            document.getElementById(`tab-content-${tabId}`).classList.remove('hidden');
+
+            // Thiết lập lại định dạng mặc định cho tất cả các nút bấm
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const bId = btn.id.replace('btn-tab-', '');
+                btn.className = `tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 border ${tabStyles[bId].inactive}`;
+            });
+
+            // Gắn kiểu dáng 'Active' đặc thù cho Tab được chọn
+            const activeBtn = document.getElementById(`btn-tab-${tabId}`);
+            activeBtn.className = `tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 border-2 ${tabStyles[tabId].active}`;
+
+            // Đồng bộ thiết kế màu sắc của thanh thông báo trạng thái
+            const noticeBar = document.getElementById('notice-bar');
+            const noticeBadge = document.getElementById('notice-badge');
+            noticeBar.className = `${tabStyles[tabId].noticeBg} border-b py-3 px-4 transition-all duration-300`;
+            noticeBadge.className = `${tabStyles[tabId].badgeBg} text-white font-bold text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider`;
+
+            // Thay đổi linh hoạt nội dung văn bản trên thanh thông báo
+            const noticeText = document.getElementById('notice-text');
+            const noticeSubtext = document.getElementById('notice-subtext');
+
+            if (tabId === 'calc') {
+                noticeText.innerHTML = `Doanh thu dưới <strong>01 tỷ đồng/năm</strong> được miễn hoàn toàn thuế GTGT & TNCN!`;
+                noticeSubtext.innerText = "Bắt buộc áp dụng Sổ doanh thu Mẫu S1a-HKD theo Thông tư 152/2025/TT-BTC & Nghị định 141/2026/NĐ-CP";
+            } else if (tabId === 'book') {
+                noticeText.innerHTML = `Lập sổ chi tiết <strong>S1a-HKD</strong> hằng ngày theo đúng trình tự chứng từ thực tế phát sinh.`;
+                noticeSubtext.innerText = "Mẫu sổ chuẩn bắt buộc phục vụ công tác thanh kiểm toán thuế";
+            } else if (tabId === 'monthly') {
+                noticeText.innerHTML = `Báo cáo phân bổ doanh thu chi tiết qua <strong>12 tháng năm 2026</strong>.`;
+                noticeSubtext.innerText = "Hỗ trợ kết xuất báo cáo nhanh (.xlsx, .doc, .csv) phục vụ lưu trữ lưu hành nội bộ";
+            } else if (tabId === 'guide') {
+                noticeText.innerHTML = `Khai báo thuế hộ kinh doanh được số hóa và đơn giản hóa thủ tục tối đa đối với nhóm miễn thuế.`;
+                noticeSubtext.innerText = "Toàn bộ tờ khai nộp qua ứng dụng trực tuyến eTax Mobile";
+            } else if (tabId === 'noti') {
+                noticeText.innerHTML = `<strong>Nghĩa vụ hàng năm:</strong> Nộp thông báo doanh thu thực tế phát sinh trước ngày <strong>31/01 năm tiếp theo</strong>.`;
+                noticeSubtext.innerText = "Thiết kế chuẩn Biểu mẫu nộp Cơ quan Thuế trực thuộc";
+            }
+
+            activeTab = tabId;
+
+            // Xử lý nạp dữ liệu đặc thù khi chuyển tab
+            if (tabId === 'book') {
+                renderLedger();
+            } else if (tabId === 'noti') {
+                syncCalcToNoti();
+            } else if (tabId === 'monthly') {
+                renderMonthlySummary();
+            }
+        }
+
+        // Gọi hộp thoại cảnh báo xác nhận xóa/thao tác (Thay thế confirm() trình duyệt)
+        function openConfirmModal(title, msg, onConfirm) {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-message').innerText = msg;
+            confirmActionCallback = onConfirm;
+
+            const modal = document.getElementById('confirm-modal');
+            const modalCard = document.getElementById('confirm-modal-card');
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalCard.classList.remove('scale-95');
+            modalCard.classList.add('scale-100');
+        }
+
+        function closeConfirmModal(isConfirmed) {
+            const modal = document.getElementById('confirm-modal');
+            const modalCard = document.getElementById('confirm-modal-card');
+            
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalCard.classList.remove('scale-100');
+            modalCard.classList.add('scale-95');
+
+            if (isConfirmed && confirmActionCallback) {
+                confirmActionCallback();
+            }
+            confirmActionCallback = null;
+        }
+
+        // Hiển thị thông báo Toast nhanh góc màn hình
+        function showToast(message, isSuccess = true) {
+            const toast = document.getElementById('toast-box');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = message;
+            if (isSuccess) {
+                toastIcon.innerHTML = `<svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+            } else {
+                toastIcon.innerHTML = `<svg class="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+            }
+
+            toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto";
+            
+            setTimeout(() => {
+                toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none";
+            }, 3000);
+        }
+
+        // Định dạng chấm phân tách phần nghìn cho trường nhập tiền mặt giao dịch
+        function formatEntryAmountInput(input) {
+            let value = input.value.replace(/\D/g, "");
+            if (value === "") {
+                input.value = "";
+                return;
+            }
+            input.value = parseInt(value, 10).toLocaleString('vi-VN');
+        }
+
+        // Thêm mới hoặc Cập nhật một nghiệp vụ ghi sổ S1a
+        function addEntry(e) {
+            e.preventDefault();
+
+            const date = document.getElementById('entry-date').value;
+            const doc = document.getElementById('entry-doc').value.trim();
+            const desc = document.getElementById('entry-desc').value.trim();
+            const amountRaw = document.getElementById('entry-amount').value.replace(/\D/g, "");
+            const amount = parseInt(amountRaw, 10) || 0;
+            const editIndex = parseInt(document.getElementById('entry-edit-index').value, 10);
+
+            if (!date || !doc || !desc || amount <= 0) {
+                showToast("Vui lòng nhập chính xác đầy đủ thông tin!", false);
+                return;
+            }
+
+            if (editIndex > -1) {
+                // CHẾ ĐỘ: CẬP NHẬT DÒNG CÓ SẴN
+                const originalEntry = ledgerEntries[editIndex];
+                ledgerEntries[editIndex] = {
+                    ...originalEntry,
+                    date: date,
+                    doc: doc,
+                    desc: desc,
+                    amount: amount
+                };
+                showToast("Đã cập nhật thành công nghiệp vụ!");
+                cancelEditMode();
+            } else {
+                // CHẾ ĐỘ: GHI MỚI DÒNG CHỨNG TỪ
+                ledgerEntries.push({ date, doc, desc, amount });
+                showToast("Đã ghi thành công nghiệp vụ vào Sổ S1a-HKD!");
+            }
+
+            saveLedgerData();
+            renderLedger();
+
+            // Dọn dẹp các trường nhập liệu
+            if (editIndex === -1) {
+                document.getElementById('entry-doc').value = '';
+                document.getElementById('entry-desc').value = '';
+                document.getElementById('entry-amount').value = '';
+            }
+        }
+
+        // Nạp thông tin một nghiệp vụ lên form để chỉnh sửa
+        function editEntry(index) {
+            if (index < 0 || index >= ledgerEntries.length) return;
+
+            const entry = ledgerEntries[index];
+
+            document.getElementById('entry-date').value = entry.date;
+            document.getElementById('entry-doc').value = entry.doc;
+            document.getElementById('entry-desc').value = entry.desc;
+            document.getElementById('entry-amount').value = entry.amount.toLocaleString('vi-VN');
+            document.getElementById('entry-edit-index').value = index;
+
+            // Chuyển giao diện form sang trạng thái Cập Nhật
+            document.getElementById('form-ledger-title').innerText = "Cập nhật Nghiệp vụ";
+            document.getElementById('btn-ledger-submit-text').innerText = "Lưu Cập Nhật";
+            document.getElementById('btn-ledger-cancel-edit').classList.remove('hidden');
+
+            // Cuộn mượt màn hình về phía form nhập liệu
+            document.getElementById('form-add-entry').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            showToast("Đã nạp dữ liệu dòng chứng từ để chỉnh sửa.");
+        }
+
+        // Hủy bỏ trạng thái sửa đổi, chuyển về trạng thái ghi chép thông thường
+        function cancelEditMode() {
+            document.getElementById('entry-edit-index').value = "-1";
+            document.getElementById('form-ledger-title').innerText = "Ghi nhận Nghiệp vụ";
+            document.getElementById('btn-ledger-submit-text').innerText = "Ghi vào Sổ S1a-HKD";
+            document.getElementById('btn-ledger-cancel-edit').classList.add('hidden');
+
+            document.getElementById('entry-doc').value = '';
+            document.getElementById('entry-desc').value = '';
+            document.getElementById('entry-amount').value = '';
+            
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('entry-date').value = today;
+        }
+
+        // Xóa một dòng chứng từ trên sổ
+        function deleteEntry(index) {
+            const editIndex = parseInt(document.getElementById('entry-edit-index').value, 10);
+            
+            openConfirmModal(
+                "Xác nhận xóa nghiệp vụ",
+                `Bạn có chắc chắn muốn loại bỏ dòng nghiệp vụ "${ledgerEntries[index].doc} - ${ledgerEntries[index].desc}" khỏi sổ sách không?`,
+                function() {
+                    if (editIndex === index) {
+                        cancelEditMode();
+                    } else if (editIndex > index) {
+                        document.getElementById('entry-edit-index').value = editIndex - 1;
+                    }
+                    
+                    ledgerEntries.splice(index, 1);
+                    saveLedgerData();
+                    renderLedger();
+                    showToast("Đã xóa nghiệp vụ khỏi sổ.");
+                }
+            );
+        }
+
+        // Lưu trữ dữ liệu sổ sách vào bộ nhớ trình duyệt
+        function saveLedgerData() {
+            localStorage.setItem('hkd_ledger_2026', JSON.stringify(ledgerEntries));
+        }
+
+        // ĐỒNG BỘ DANH SÁCH THÁNG LÊN THANH TRA CỨU
+        function updateSearchMonthDropdown() {
+            const selectEl = document.getElementById('search-month-select');
+            if (!selectEl) return;
+
+            // Lưu lại tháng đang chọn hiện tại để tránh bị reset về "Tất cả" khi render lại bảng
+            const currentSelected = selectEl.value;
+
+            // Tìm toàn bộ các tháng có trong dữ liệu sổ sách hiện tại
+            const summaryData = getMonthlyRevenueSummary();
+            
+            let html = '<option value="all">--- Tất cả các tháng ---</option>';
+            summaryData.forEach(item => {
+                html += `<option value="${item.key}">Tháng ${item.key}</option>`;
+            });
+
+            selectEl.innerHTML = html;
+
+            // Khôi phục lại tháng được chọn nếu nó vẫn tồn tại trong danh sách mới
+            if (summaryData.some(item => item.key === currentSelected)) {
+                selectEl.value = currentSelected;
+            } else {
+                selectEl.value = 'all';
+                filterMonth = 'all';
+            }
+        }
+
+        // Trình xử lý sự kiện khi chọn một tháng trên thanh Tra cứu nhanh hằng ngày
+        function onSearchMonthChange() {
+            const selectEl = document.getElementById('search-month-select');
+            filterMonth = selectEl.value;
+            renderLedger();
+            if (filterMonth !== 'all') {
+                showToast(`Đang tra cứu dữ liệu chứng từ Tháng ${filterMonth}`);
+            } else {
+                showToast("Hiển thị dữ liệu toàn bộ sổ sách!");
+            }
+        }
+
+        // Xuất bảng biểu diễn họa Sổ chi tiết S1a
+        function renderLedger() {
+            const tableBody = document.getElementById('s1a-table-body');
+            const totalSumElement = document.getElementById('s1a-total-sum');
+            const statRevenueElement = document.getElementById('book-stat-revenue');
+            const statStatusElement = document.getElementById('book-stat-status');
+            const statRatioElement = document.getElementById('book-stat-ratio');
+            const searchResultCount = document.getElementById('search-result-count');
+
+            // Hiển thị / Ẩn nhãn đang lọc theo tháng
+            const filterBadge = document.getElementById('filter-badge');
+            const filterBadgeText = document.getElementById('filter-badge-text');
+            if (filterMonth !== 'all') {
+                filterBadge.classList.remove('hidden');
+                filterBadgeText.innerText = `Đang lọc: Tháng ${filterMonth}`;
+            } else {
+                filterBadge.classList.add('hidden');
+            }
+
+            // Cập nhật lại dropdown tra cứu tháng dựa trên dữ liệu hiện hữu
+            updateSearchMonthDropdown();
+
+            if (ledgerEntries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-slate-400 italic">Chưa có dữ liệu nào được nhập. Hãy điền form bên cạnh hoặc tải dữ liệu mẫu!</td>
+                    </tr>
+                `;
+                totalSumElement.innerText = "0 đ";
+                statRevenueElement.innerText = "0 đ";
+                statStatusElement.innerHTML = `<span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span> An toàn (< 1 Tỷ)`;
+                statRatioElement.innerText = "Còn lại 1.000.000.000đ trước khi chịu thuế";
+                if (searchResultCount) searchResultCount.innerText = "Hiển thị tất cả chứng từ phát sinh";
+                return;
+            }
+
+            // Sắp xếp chứng từ theo thời gian tăng dần
+            let sortedEntries = [...ledgerEntries];
+            sortedEntries.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            // Áp dụng bộ lọc tháng nếu có
+            if (filterMonth !== 'all') {
+                sortedEntries = sortedEntries.filter(entry => {
+                    const d = new Date(entry.date);
+                    const mKey = `${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+                    return mKey === filterMonth;
+                });
+            }
+
+            let html = '';
+            let filteredTotalSum = 0;
+            let grandTotalSum = ledgerEntries.reduce((sum, entry) => sum + entry.amount, 0);
+
+            if (sortedEntries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-slate-400 italic">Không tìm thấy chứng từ nào trong tháng ${filterMonth}.</td>
+                    </tr>
+                `;
+                totalSumElement.innerText = "0 đ";
+                if (searchResultCount) searchResultCount.innerText = `Tìm thấy 0 chứng từ trong Tháng ${filterMonth}`;
+            } else {
+                sortedEntries.forEach((entry, index) => {
+                    filteredTotalSum += entry.amount;
+                    const formattedDate = entry.date.split('-').reverse().join('/');
+
+                    // Tìm chỉ mục thực tế trong mảng gốc ledgerEntries để sửa/xóa chính xác
+                    const originalIndex = ledgerEntries.findIndex(item => item === entry);
+
+                    html += `
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="py-3 px-3 border-r border-slate-200 text-center font-medium text-slate-500">${index + 1}</td>
+                            <td class="py-3 px-3 border-r border-slate-200 text-center font-semibold text-slate-700">${formattedDate}</td>
+                            <td class="py-3 px-3 border-r border-slate-200 text-center font-bold text-slate-800">${escapeHTML(entry.doc)}</td>
+                            <td class="py-3 px-3 border-r border-slate-200 text-slate-700 font-medium">${escapeHTML(entry.desc)}</td>
+                            <td class="py-3 px-3 border-r border-slate-200 text-right font-bold text-slate-900">${formatVND(entry.amount)}</td>
+                            <td class="py-3 px-3 text-center">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <button onclick="editEntry(${originalIndex})" class="text-indigo-600 hover:text-indigo-800 p-1 hover:bg-indigo-50 rounded transition" title="Sửa dòng chứng từ">
+                                        <svg class="w-4 h-4"><use href="#icon-edit"></use></svg>
+                                    </button>
+                                    <button onclick="deleteEntry(${originalIndex})" class="text-rose-600 hover:text-rose-800 p-1 hover:bg-rose-50 rounded transition" title="Xóa dòng này">
+                                        <svg class="w-4 h-4"><use href="#icon-trash"></use></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tableBody.innerHTML = html;
+                totalSumElement.innerText = formatVND(filteredTotalSum);
+                if (searchResultCount) {
+                    if (filterMonth !== 'all') {
+                        searchResultCount.innerText = `Tìm thấy ${sortedEntries.length} chứng từ thuộc Tháng ${filterMonth} (Tổng: ${formatVND(filteredTotalSum)})`;
+                    } else {
+                        searchResultCount.innerText = `Hiển thị toàn bộ ${ledgerEntries.length} chứng từ phát sinh`;
+                    }
+                }
+            }
+
+            statRevenueElement.innerText = formatVND(grandTotalSum);
+
+            // Kiểm tra trạng thái vượt ngưỡng thuế của doanh thu lũy kế tổng thể thực tế trên sổ
+            if (grandTotalSum < 1000000000) {
+                const remaining = 1000000000 - grandTotalSum;
+                statStatusElement.innerHTML = `<span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span> An toàn (< 1 Tỷ)`;
+                statStatusElement.className = "text-lg font-bold text-emerald-600 mt-1 flex items-center gap-1.5";
+                statRatioElement.innerText = `Còn lại ${formatVND(remaining)} trước khi phải chịu thuế`;
+            } else {
+                statStatusElement.innerHTML = `<span class="inline-block w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span> Vượt ngưỡng (&gt; 1 Tỷ)`;
+                statStatusElement.className = "text-lg font-bold text-rose-600 mt-1 flex items-center gap-1.5";
+                statRatioElement.innerText = "Hộ đã chính thức phát sinh nghĩa vụ nộp thuế GTGT & TNCN";
+            }
+        }
+
+        // Tạo nhanh nhóm dữ liệu mẫu chuẩn Thông tư 152
+        // Bổ sung: đồng bộ lại báo cáo tháng khi có thay đổi dữ liệu mẫu
+        function loadSampleEntries(triggerToast = true) {
+            ledgerEntries = [
+                { date: "2026-01-10", doc: "HD-0021", desc: "Bán buôn linh kiện máy tính, phụ kiện điện tử sỉ", amount: 154000000 },
+                { date: "2026-02-15", doc: "HD-0022", desc: "Cung cấp giải pháp phần mềm và quản lý dữ liệu đối tác", amount: 210000000 },
+                { date: "2026-03-22", doc: "HD-0023", desc: "Cung cấp máy tính văn phòng đồng bộ cho công ty", amount: 320000000 },
+                { date: "2026-04-05", doc: "BL-0001", desc: "Dịch vụ cấu hình, bảo trì hệ thống máy chủ mạng nội bộ", amount: 85000000 }
+            ];
+            saveLedgerData();
+            cancelEditMode();
+            filterMonth = 'all'; // Đặt lại bộ lọc tháng khi nạp dữ liệu mới
+            renderLedger();
+            if (activeTab === 'monthly') {
+                renderMonthlySummary();
+            }
+            if (triggerToast) {
+                showToast("Đã tải nhóm dữ liệu chứng từ mẫu thành công!");
+            }
+        }
+
+        // Yêu cầu xóa trống toàn bộ sổ tay tài chính
+        function requestClearAll() {
+            openConfirmModal(
+                "Xác nhận xóa sạch sổ sách",
+                "Bạn có chắc chắn muốn làm trống hoàn toàn lịch sử ghi chép trong sổ S1a-HKD không? Tất cả dữ liệu lưu trữ trên trình duyệt của bạn sẽ biến mất.",
+                function() {
+                    ledgerEntries = [];
+                    saveLedgerData();
+                    cancelEditMode();
+                    filterMonth = 'all';
+                    renderLedger();
+                    if (activeTab === 'monthly') {
+                        renderMonthlySummary();
+                    }
+                    showToast("Đã làm sạch toàn bộ dữ liệu sổ sách!");
+                }
+            );
+        }
+
+        // Tải xuống file sao lưu cơ sở dữ liệu dạng .json
+        function downloadS1aData() {
+            if (ledgerEntries.length === 0) {
+                showToast("Sổ sách hiện tại trống, không có thông số để xuất!", false);
+                return;
+            }
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ledgerEntries, null, 4));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "so_doanh_thu_mau_S1a_HKD_2026.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+
+            showToast("Đã kết xuất và tải về file sao lưu JSON thành công!");
+        }
+
+        // Định dạng chấm phân tách phần nghìn cho trường Doanh thu trên Form Thông báo
+        function formatNotiRevenue() {
+            const revInput = document.getElementById('noti-revenue');
+            let value = revInput.value.replace(/\D/g, "");
+            if (value === "") value = "0";
+            revInput.value = parseInt(value).toLocaleString('vi-VN');
+            updateNotiPreview();
+        }
+
+        // Kết xuất thời gian thực dữ liệu nhập từ form cấu hình lên Tờ Khai in giả lập
+        function updateNotiPreview() {
+            const taxOffice = document.getElementById('noti-tax-office').value;
+            const name = document.getElementById('noti-name').value;
+            const mst = document.getElementById('noti-mst').value;
+            const address = document.getElementById('calc-address').value; // Đồng bộ địa chỉ gốc
+            const industry = document.getElementById('noti-industry').value;
+            const year = document.getElementById('noti-year').value;
+            const rawRev = document.getElementById('noti-revenue').value.replace(/\D/g, "");
+            const revenueVal = parseInt(rawRev) || 0;
+
+            document.getElementById('lbl-tax-office-header').innerText = taxOffice.toUpperCase();
+            document.getElementById('lbl-tax-office').innerText = taxOffice;
+            document.getElementById('lbl-name').innerText = name.toUpperCase();
+            document.getElementById('lbl-hkd-name').innerText = name.toUpperCase();
+            document.getElementById('lbl-mst').innerText = mst;
+            document.getElementById('lbl-address').innerText = address;
+            document.getElementById('lbl-industry').innerText = industry;
+            document.getElementById('lbl-year').innerText = year;
+            document.getElementById('lbl-noti-year').innerText = "Áp dụng cho năm tài chính: " + year;
+            
+            const formattedRevenue = formatVND(revenueVal);
+            document.getElementById('lbl-revenue').innerText = formattedRevenue;
+            document.getElementById('lbl-footer-name').innerText = name.toUpperCase();
+
+            // Đánh giá nhanh sự an sau khi thay đổi doanh thu
+            const evaluationEl = document.getElementById('lbl-evaluation');
+            if (revenueVal < 1000000000) {
+                evaluationEl.innerText = "Thuộc diện miễn hoàn toàn thuế GTGT & TNCN (< 01 tỷ đồng/năm)";
+                evaluationEl.className = "uppercase tracking-wide text-emerald-700 font-bold";
+            } else {
+                evaluationEl.innerText = "Đã vượt ngưỡng miễn thuế - Phát sinh nghĩa vụ nộp thuế theo luật định";
+                evaluationEl.className = "uppercase tracking-wide text-rose-600 font-bold";
+            }
+        }
+
+        // Tự động đồng bộ hóa lũy kế doanh thu thực từ sổ sách hằng ngày S1a vào Tờ Khai và Form tính thuế
+        function syncLedgerToRevenue() {
+            let totalLedgerRevenue = 0;
+            ledgerEntries.forEach(entry => {
+                totalLedgerRevenue += entry.amount;
+            });
+
+            document.getElementById('noti-revenue').value = totalLedgerRevenue.toLocaleString('vi-VN');
+            document.getElementById('calc-revenue').value = totalLedgerRevenue.toLocaleString('vi-VN');
+            
+            calculateTax();
+            updateNotiPreview();
+            showToast("Đã đồng bộ tổng lũy kế doanh thu từ Sổ S1a sang hệ thống tính thuế!");
+        }
+
+        // Sao chép dạng văn bản thuần của Tờ thông báo mẫu để gửi qua tin nhắn/email
+        function copyNotiRawText() {
+            const taxOffice = document.getElementById('noti-tax-office').value;
+            const name = document.getElementById('noti-name').value;
+            const mst = document.getElementById('noti-mst').value;
+            const address = document.getElementById('calc-address').value; // Đồng bộ địa chỉ gốc
+            const industry = document.getElementById('noti-industry').value;
+            const year = document.getElementById('noti-year').value;
+            const rawRev = document.getElementById('noti-revenue').value.replace(/\D/g, "");
+            const revenueVal = parseInt(rawRev) || 0;
+
+            const textToCopy = `TỔNG CỤC THUẾ\nCƠ QUAN THUẾ: ${taxOffice.toUpperCase()}\n\nCỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n\nTHÔNG BÁO DOANH THU THỰC TẾ PHÁT SINH TRONG NĂM\nÁp dụng cho năm tài chính: ${year}\n\nKính gửi: ${taxOffice}\n\nTôi tên là: ${name.toUpperCase()}\nĐại diện hợp pháp của Hộ kinh doanh: ${name.toUpperCase()}\nMã số thuế: ${mst}\nĐịa điểm hoạt động: ${address}\nNgành nghề: ${industry}\n\nDoanh thu ghi sổ thực tế (Mẫu S1a-HKD) phát sinh trong năm: ${formatVND(revenueVal)}\nCam kết dữ liệu trung thực và chịu trách nhiệm trước pháp luật.\n\nNgười khai báo: ${name.toUpperCase()}`;
+
+            // Thực hiện sao chép thông qua đối tượng ảo an toàn với Iframe
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = textToCopy;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextarea);
+
+            showToast("Đã sao chép nội dung văn bản tờ khai vào khay nhớ tạm!");
+        }
+
+        // Gọi lệnh in bản cứng tờ khai qua trình điều khiển hệ điều hành
+        function printNoti() {
+            window.print();
+        }
+
+        // Mã hóa ký tự đặc biệt phòng tránh tấn công XSS chèn mã độc
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+
+        // ==================== CÁC CHỨC NĂNG BÁO CÁO DOANH THU THEO THÁNG (BẢN NÂNG CẤP THÀNH TAB CHUYÊN BIỆT) ====================
+
+        // Gom nhóm và tổng hợp doanh thu của sổ sách theo tháng
+        function getMonthlyRevenueSummary() {
+            const summary = {};
+            ledgerEntries.forEach(entry => {
+                if (!entry.date) return;
+                const d = new Date(entry.date);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const key = `${month}/${year}`; // Ví dụ: "01/2026"
+
+                if (!summary[key]) {
+                    summary[key] = {
+                        key: key,
+                        monthStr: `Tháng ${month}/${year}`,
+                        month: month,
+                        year: year,
+                        count: 0,
+                        total: 0
+                    };
+                }
+                summary[key].count++;
+                summary[key].total += entry.amount;
+            });
+
+            // Chuyển đối tượng sang mảng và sắp xếp tăng dần theo năm, tháng
+            return Object.values(summary).sort((a, b) => {
+                if (a.year !== b.year) return a.year - b.year;
+                return a.month - b.month;
+            });
+        }
+
+        // Vẽ nội dung biểu tổng hợp doanh thu tháng trong Tab Báo Cáo Tháng
+        function renderMonthlySummary() {
+            // Cập nhật thông tin chủ hộ, MST lên tab báo cáo
+            document.getElementById('monthly-owner').innerText = document.getElementById('calc-owner').value.toUpperCase();
+            document.getElementById('monthly-mst').innerText = document.getElementById('calc-mst').value;
+
+            const summaryData = getMonthlyRevenueSummary();
+            const tableBody = document.getElementById('monthly-summary-table-body');
+            
+            let totalYear = ledgerEntries.reduce((sum, item) => sum + item.amount, 0);
+            document.getElementById('monthly-total-year').innerText = formatVND(totalYear);
+
+            if (summaryData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-12 text-center text-slate-400 italic text-sm">Chưa có chứng từ doanh thu nào để tổng hợp hằng tháng.</td>
+                    </tr>
+                `;
+            } else {
+                let html = '';
+                summaryData.forEach(item => {
+                    const ratio = totalYear > 0 ? ((item.total / totalYear) * 100).toFixed(1) : '0.0';
+                    html += `
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="py-4 px-4 font-bold text-slate-800 text-sm">${item.monthStr}</td>
+                            <td class="py-4 px-4 text-center font-semibold text-slate-600 text-sm">${item.count}</td>
+                            <td class="py-4 px-4 text-right font-extrabold text-slate-900 text-sm">${formatVND(item.total)}</td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full font-bold text-[11px]">${ratio}%</span>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <button onclick="applyMonthFilter('${item.key}')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-[11px] transition shadow-sm" title="Lọc xem chi tiết trên bảng sổ chính">
+                                        Xem Sổ S1a
+                                    </button>
+                                    <button onclick="exportMonthlyDetailExcel('${item.key}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-[11px] transition shadow-sm flex items-center gap-1" title="Xuất Sổ Doanh Thu Mẫu S1a-HKD ra file Excel .xlsx">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        <span>Excel</span>
+                                    </button>
+                                    <button onclick="exportMonthlyDetailWord('${item.key}')" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-[11px] transition shadow-sm flex items-center gap-1" title="Kết xuất Sổ Doanh Thu Mẫu S1a-HKD ra file Word .doc">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        <span>Word</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tableBody.innerHTML = html;
+            }
+        }
+
+        // Áp dụng bộ lọc tháng và tự động điều chuyển màn hình về Sổ sách chính
+        function applyMonthFilter(monthKey) {
+            filterMonth = monthKey;
+            
+            // Đồng bộ bộ chọn tìm kiếm tháng hằng ngày tương ứng
+            const selectEl = document.getElementById('search-month-select');
+            if (selectEl) selectEl.value = monthKey;
+
+            // Chuyển nhanh tab sang Tab Sổ Doanh Thu (S1a)
+            switchTab('book');
+            showToast(`Đã áp dụng bộ lọc: Tháng ${monthKey}`);
+        }
+
+        // Tắt bỏ bộ lọc tháng, quay lại hiển thị toàn bộ Sổ S1a
+        function clearMonthFilter() {
+            filterMonth = 'all';
+            
+            // Đồng bộ bộ chọn tìm kiếm tháng hằng ngày về "Tất cả"
+            const selectEl = document.getElementById('search-month-select');
+            if (selectEl) selectEl.value = 'all';
+
+            renderLedger();
+            showToast("Đã gỡ bỏ bộ lọc tháng, hiển thị toàn bộ sổ.");
+        }
+
+        // Kết xuất dữ liệu Báo cáo doanh thu hằng tháng ra tệp CSV Excel tiếng Việt chuẩn mã hóa
+        function exportMonthlyReportCSV() {
+            const summaryData = getMonthlyRevenueSummary();
+            if (summaryData.length === 0) {
+                showToast("Không có dữ liệu tháng nào để kết xuất!", false);
+                return;
+            }
+
+            const owner = document.getElementById('calc-owner').value.toUpperCase();
+            const mst = document.getElementById('calc-mst').value;
+            let totalYear = ledgerEntries.reduce((sum, item) => sum + item.amount, 0);
+
+            // UTF-8 BOM để Excel hiển thị đúng dấu tiếng Việt
+            let csvContent = "\ufeff";
+            csvContent += "BÁO CÁO TỔNG HỢP DOANH THU THEO THÁNG - NĂM 2026\n";
+            csvContent += `Tên hộ kinh doanh,${owner}\n`;
+            csvContent += `Mã số thuế,${mst}\n`;
+            csvContent += `Tổng doanh thu năm,${totalYear} đ\n\n`;
+            
+            csvContent += "Tháng/Năm,Số lượng chứng từ,Doanh thu phát sinh (VNĐ),Tỷ trọng (%)\n";
+
+            summaryData.forEach(item => {
+                const ratio = totalYear > 0 ? ((item.total / totalYear) * 100).toFixed(1) : '0.0';
+                csvContent += `${item.monthStr},${item.count},${item.total},${ratio}%\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.createElement("a");
+            downloadLink.setAttribute("href", url);
+            downloadLink.setAttribute("download", `bao_cao_tong_hop_doanh_thu_theo_thang_2026.csv`);
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            showToast("Đã tải tệp Excel báo cáo tổng hợp hằng tháng!");
+        }
+
+        // KẾT XUẤT XLS/XLSX SỬ DỤNG SHEETJS
+        function exportMonthlyDetailExcel(monthKey) {
+            let filtered = ledgerEntries.filter(entry => {
+                if (!entry.date) return false;
+                const d = new Date(entry.date);
+                const mKey = `${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+                return mKey === monthKey;
+            });
+
+            if (filtered.length === 0) {
+                showToast(`Tháng ${monthKey} không có dữ liệu chứng từ chi tiết để xuất!`, false);
+                return;
+            }
+
+            filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            const owner = document.getElementById('calc-owner').value.toUpperCase() || ".................................";
+            const mst = document.getElementById('calc-mst').value || "..........................";
+            const address = document.getElementById('calc-address').value || ".................................";
+            
+            let monthlyTotal = filtered.reduce((sum, item) => sum + item.amount, 0);
+
+            const today = new Date();
+            const dayStr = String(today.getDate()).padStart(2, '0');
+            const monthStr = String(today.getMonth() + 1).padStart(2, '0');
+            const yearStr = today.getFullYear();
+
+            const tempDiv = document.createElement('div');
+            let tableHtml = `
+                <table>
+                    <tr>
+                        <td colspan="2" style="font-weight: bold;">HỘ, CÁ NHÂN KINH DOANH: ${owner}</td>
+                        <td style="font-weight: bold; text-align: right;">Mẫu số S1a-HKD</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Địa chỉ: ${address}</td>
+                        <td style="text-align: right; font-style: italic; font-size: 10pt;">(Kèm theo Thông tư số 152/2025/TT-BTC)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Mã số thuế: ${mst}</td>
+                        <td style="text-align: right; font-style: italic; font-size: 10pt;">ngày 31 tháng 12 năm 2025 của Bộ trưởng Bộ Tài chính)</td>
+                    </tr>
+                    <tr><td colspan="3"></td></tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center; font-weight: bold; font-size: 14pt;">SỔ DOANH THU BÁN HÀNG HÓA, DỊCH VỤ</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center; font-style: italic;">Địa điểm kinh doanh: ${address}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center; font-style: italic;">Kỳ kê khai: Tháng ${monthKey}</td>
+                    </tr>
+                    <tr><td colspan="3"></td></tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td style="text-align: right; font-style: italic;">Đơn vị tính: Đồng Việt Nam (VND)</td>
+                    </tr>
+                    <thead>
+                        <tr style="font-weight: bold; background-color: #f2f2f2;">
+                            <th style="border: 0.5pt solid #000000; text-align: center;">Ngày tháng</th>
+                            <th style="border: 0.5pt solid #000000; text-align: center;">Diễn giải</th>
+                            <th style="border: 0.5pt solid #000000; text-align: center;">Số tiền</th>
+                        </tr>
+                        <tr style="font-style: italic; background-color: #f2f2f2;">
+                            <td style="border: 0.5pt solid #000000; text-align: center;">A</td>
+                            <td style="border: 0.5pt solid #000000; text-align: center;">B</td>
+                            <td style="border: 0.5pt solid #000000; text-align: center;">1</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            filtered.forEach(entry => {
+                const formattedDate = entry.date.split('-').reverse().join('/');
+                tableHtml += `
+                    <tr>
+                        <td style="border: 0.5pt solid #000000; text-align: center;">${formattedDate}</td>
+                        <td style="border: 0.5pt solid #000000;">${escapeHTML(entry.desc)} (Số hiệu CT: ${escapeHTML(entry.doc)})</td>
+                        <td style="border: 0.5pt solid #000000; text-align: right;">${entry.amount}</td>
+                    </tr>
+                `;
+            });
+
+            const minimumRows = 6;
+            if (filtered.length < minimumRows) {
+                const fillCount = minimumRows - filtered.length;
+                for (let i = 0; i < fillCount; i++) {
+                    tableHtml += `
+                        <tr>
+                            <td style="border: 0.5pt solid #000000;">&nbsp;</td>
+                            <td style="border: 0.5pt solid #000000;">&nbsp;</td>
+                            <td style="border: 0.5pt solid #000000;">&nbsp;</td>
+                        </tr>
+                    `;
+                }
+            }
+
+            tableHtml += `
+                    <tr>
+                        <td colspan="2" style="border: 0.5pt solid #000000; font-weight: bold; text-align: right; background-color: #f2f2f2;">Tổng cộng</td>
+                        <td style="border: 0.5pt solid #000000; font-weight: bold; text-align: right; background-color: #f2f2f2; color: #1d4ed8;">${monthlyTotal}</td>
+                    </tr>
+                    <tr><td colspan="3"></td></tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: center; font-style: italic;">Ngày ${dayStr} tháng ${monthStr} năm ${yearStr}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: center; font-weight: bold;">NGƯỜI ĐẠI DIỆN HỘ KINH DOANH/</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: center; font-weight: bold;">CÁ NHÂN KINH DOANH</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: center; font-style: italic; color: #555555;">(Ký, ghi rõ họ tên, đóng dấu (nếu có))</td>
+                    </tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: center; font-weight: bold; text-decoration: underline;">${owner}</td>
+                    </tr>
+                </tbody>
+                </table>
+            `;
+
+            tempDiv.innerHTML = tableHtml;
+            const tableEl = tempDiv.querySelector('table');
+
+            const ws = XLSX.utils.table_to_sheet(tableEl, { raw: false });
+            const wb = XLSX.utils.book_new();
+
+            for (let cellRef in ws) {
+                if (cellRef.startsWith('C')) {
+                    const cell = ws[cellRef];
+                    if (cell && cell.v !== undefined && !isNaN(cell.v) && cell.v !== "") {
+                        cell.t = 'n';                 
+                        cell.z = '#,##0" đ"';         
+                    }
+                }
+            }
+
+            ws['!cols'] = [
+                { wch: 15 }, 
+                { wch: 60 }, 
+                { wch: 20 }  
+            ];
+
+            XLSX.utils.book_append_sheet(wb, ws, `S1a-HKD_${monthKey.replace('/', '_')}`);
+            XLSX.writeFile(wb, `so_doanh_thu_S1a_HKD_thang_${monthKey.replace(/\//g, '_')}.xlsx`);
+
+            showToast(`Đã kết xuất thành công Sổ doanh thu Excel (.xlsx) nguyên bản cho tháng ${monthKey}!`);
+        }
+
+        // KẾT XUẤT SỔ DOANH THU MẪU S1A-HKD RA WORD (.DOC)
+        function exportMonthlyDetailWord(monthKey) {
+            let filtered = ledgerEntries.filter(entry => {
+                if (!entry.date) return false;
+                const d = new Date(entry.date);
+                const mKey = `${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+                return mKey === monthKey;
+            });
+
+            if (filtered.length === 0) {
+                showToast(`Tháng ${monthKey} không có dữ liệu chứng từ chi tiết để xuất!`, false);
+                return;
+            }
+
+            filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            const owner = document.getElementById('calc-owner').value.toUpperCase() || ".................................";
+            const mst = document.getElementById('calc-mst').value || "..........................";
+            const address = document.getElementById('calc-address').value || ".................................";
+            
+            let monthlyTotal = filtered.reduce((sum, item) => sum + item.amount, 0);
+
+            const today = new Date();
+            const dayStr = String(today.getDate()).padStart(2, '0');
+            const monthStr = String(today.getMonth() + 1).padStart(2, '0');
+            const yearStr = today.getFullYear();
+
+            let htmlContent = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+            <head>
+                <meta charset="utf-8">
+                <title>Sổ Doanh Thu Mẫu S1a-HKD</title>
+                <!--[if gte mso 9]>
+                <xml>
+                    <w:WordDocument>
+                        <w:View>Print</w:View>
+                        <w:Zoom>100</w:Zoom>
+                        <w:DoNotOptimizeForBrowser/>
+                    </w:WordDocument>
+                </xml>
+                <![endif]-->
+                <style>
+                    @page {
+                        size: A4 portrait;
+                        margin: 2cm 1.5cm 2cm 2cm;
+                    }
+                    body {
+                        font-family: 'Times New Roman', Times, serif;
+                        font-size: 11pt;
+                        line-height: 1.4;
+                        color: #000000;
+                    }
+                    .header-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 25px;
+                    }
+                    .header-table td {
+                        border: none !important;
+                        padding: 0;
+                        vertical-align: top;
+                    }
+                    .header-left {
+                        width: 55%;
+                        font-weight: bold;
+                        text-align: left;
+                        font-size: 10pt;
+                    }
+                    .header-right {
+                        width: 45%;
+                        text-align: center;
+                        font-size: 9.5pt;
+                    }
+                    .title {
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: 15pt;
+                        text-transform: uppercase;
+                        margin-top: 15px;
+                        margin-bottom: 5px;
+                    }
+                    .info-section {
+                        text-align: center;
+                        margin-bottom: 15px;
+                        font-size: 11pt;
+                    }
+                    .dvt {
+                        text-align: right;
+                        font-style: italic;
+                        font-size: 11pt;
+                        margin-bottom: 5px;
+                    }
+                    .data-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 25px;
+                    }
+                    .data-table th {
+                        border: 1px solid #000000;
+                        padding: 6px 4px;
+                        font-weight: bold;
+                        text-align: center;
+                        font-size: 11pt;
+                    }
+                    .data-table td {
+                        border: 1px solid #000000;
+                        padding: 6px 6px;
+                        font-size: 11pt;
+                        vertical-align: middle;
+                    }
+                    .bg-gray {
+                        background-color: #f2f2f2;
+                    }
+                    .footer-section {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 25px;
+                    }
+                    .footer-section td {
+                        border: none !important;
+                        width: 50%;
+                        text-align: center;
+                        vertical-align: top;
+                        font-size: 11pt;
+                    }
+                    .text-right { text-align: right; }
+                    .text-center { text-align: center; }
+                    .font-bold { font-weight: bold; }
+                    .italic { font-style: italic; }
+                </style>
+            </head>
+            <body>
+                <table class="header-table">
+                    <tr>
+                        <td class="header-left">
+                            HỘ, CÁ NHÂN KINH DOANH: ${owner}<br>
+                            Địa chỉ: ${address}<br>
+                            Mã số thuế: ${mst}
+                        </td>
+                        <td class="header-right">
+                            <span class="font-bold">Mẫu số S1a-HKD</span><br>
+                            <span class="italic">(Kèm theo Thông tư số 152/2025/TT-BTC<br>ngày 31 tháng 12 năm 2025 của Bộ trưởng Bộ Tài chính)</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="title">SỔ DOANH THU BÁN HÀNG HÓA, DỊCH VỤ</div>
+                
+                <div class="info-section">
+                    Địa điểm kinh doanh: ${address}<br>
+                    Kỳ kê khai: Tháng ${monthKey}<br>
+                </div>
+
+                <div class="dvt">Đơn vị tính: Đồng Việt Nam (VND)</div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr class="bg-gray">
+                            <th style="width: 20%;">Ngày tháng</th>
+                            <th style="width: 55%;">Diễn giải</th>
+                            <th style="width: 25%;">Số tiền</th>
+                        </tr>
+                        <tr class="bg-gray">
+                            <th>A</th>
+                            <th>B</th>
+                            <th>1</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            filtered.forEach(entry => {
+                const formattedDate = entry.date.split('-').reverse().join('/');
+                htmlContent += `
+                    <tr>
+                        <td class="text-center font-bold">${formattedDate}</td>
+                        <td>${escapeHTML(entry.desc)} (Số hiệu CT: ${escapeHTML(entry.doc)})</td>
+                        <td class="text-right font-bold">${entry.amount.toLocaleString('vi-VN')} đ</td>
+                    </tr>
+                `;
+            });
+
+            const minimumRows = 6;
+            if (filtered.length < minimumRows) {
+                const fillCount = minimumRows - filtered.length;
+                for (let i = 0; i < fillCount; i++) {
+                    htmlContent += `
+                        <tr>
+                            <td style="height: 24px;">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    `;
+                }
+            }
+
+            htmlContent += `
+                        <tr class="bg-gray font-bold">
+                            <td colspan="2" class="text-right">Tổng cộng</td>
+                            <td class="text-right">${monthlyTotal.toLocaleString('vi-VN')} đ</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="footer-section">
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="italic" style="margin-bottom: 8px;">Ngày ${dayStr} tháng ${monthStr} năm ${yearStr}</div>
+                            <div class="font-bold">NGƯỜI ĐẠI DIỆN HỘ KINH DOANH/</div>
+                            <div class="font-bold" style="margin-bottom: 50px;">CÁ NHÂN KINH DOANH</div>
+                            <div class="italic" style="color: #555555; margin-bottom: 50px;">(Ký, ghi rõ họ tên, đóng dấu (nếu có))</div>
+                            <div class="font-bold underline">${owner}</div>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            </html>
+            `;
+
+            const blob = new Blob([htmlContent], { type: 'application/msword;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.createElement("a");
+            downloadLink.setAttribute("href", url);
+            downloadLink.setAttribute("download", `so_doanh_thu_S1a_HKD_thang_${monthKey.replace(/\//g, '_')}.doc`);
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            showToast(`Đã xuất thành công Sổ doanh thu Word (.doc) cho tháng ${monthKey}!`);
+        }
+    </script>
+</body>
+</html>
